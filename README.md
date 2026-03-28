@@ -5,12 +5,16 @@
 ## Status
 
 ✅ Phase 1: Project Foundation - Complete
+✅ Phase 2: Styling System - Complete
 
 ## Features
 
 - **Next.js 16** with App Router
+- **React 19** with Server Components
 - **TypeScript** with strict but pragmatic configuration
 - **Tailwind CSS 4** for styling
+- **Shadcn UI** components
+- **Dark mode** support
 - **ESLint + Prettier** for code quality (AI-friendly)
 - **Lefthook** for git hooks
 - **Commitlint + Commitizen** for conventional commits
@@ -56,14 +60,14 @@ pisky/
 
 ## Tech Stack
 
-| Category     | Technology                        |
-| ------------ | --------------------------------- |
-| Core         | Next.js 16+, React 19, TypeScript |
-| Styling      | Tailwind CSS 4                    |
-| Code Quality | ESLint, Prettier, Lefthook        |
-| Validation   | Zod (planned)                     |
-| Database     | DrizzleORM (planned)              |
-| Auth         | NextAuth.js (planned)             |
+| Category     | Technology                        | Status |
+| ------------ | --------------------------------- | ------ |
+| Core         | Next.js 16+, React 19, TypeScript | ✅     |
+| Styling      | Tailwind CSS 4, Shadcn UI         | ✅     |
+| Code Quality | ESLint, Prettier, Lefthook        | ✅     |
+| Validation   | Zod (planned)                     | ⏳     |
+| Database     | DrizzleORM (planned)              | ⏳     |
+| Auth         | NextAuth.js (planned)             | ⏳     |
 
 ## License
 
