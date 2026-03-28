@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dev",
+      "type": "shell",
+      "command": "pnpm run dev",
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "lint",
+      "type": "shell",
+      "command": "pnpm run lint",
+      "problemMatcher": []
+    },
+    {
+      "label": "type-check",
+      "type": "shell",
+      "command": "npx tsc --noEmit",
+      "problemMatcher": "$tsc"
+    }
+  ]
+}

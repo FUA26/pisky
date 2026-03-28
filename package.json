@@ -9,7 +9,13 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "commit": "commitizen"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   },
   "dependencies": {
     "next": "16.2.1",
@@ -17,12 +23,18 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@commitlint/prompt-cli": "^20.5.0",
     "@eslint/eslintrc": "^3.3.5",
+    "@evilmartians/lefthook": "^2.1.4",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "clsx": "^2.1.1",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
     "eslint-config-prettier": "^10.1.8",
