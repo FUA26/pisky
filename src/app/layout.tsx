@@ -1,24 +1,19 @@
 import type { Metadata } from "next";
-import { Header } from "@/shared/components/layout/header";
-import { Footer } from "@/shared/components/layout/footer";
+import "./globals.css";
 import { ThemeProvider } from "@/shared/components/theme-provider";
-import { ThemeToggle } from "@/shared/components/theme-toggle";
+import { geistSans, geistMono } from "@/shared/config/fonts";
 
 export const metadata: Metadata = {
-  title: "Pisky Boilerplate",
-  description: "A personalized Next.js 16+ boilerplate",
+  title: "Pisky Design System",
+  description: "Attio-inspired UI design system for modern applications",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header>
-            <ThemeToggle />
-          </Header>
-          <main className="min-h-[calc(100vh-8rem)]">{children}</main>
-          <Footer />
+          {children}
         </ThemeProvider>
       </body>
     </html>

@@ -1,49 +1,252 @@
+@layer base, components, utilities;
+
 @import "tailwindcss";
 
-@layer theme {
-  :root {
-    --color-background: 0 0% 100%;
-    --color-foreground: 222.2 84% 4.9%;
-    --color-primary: 221.2 83.2% 53.3%;
-    --color-primary-foreground: 210 40% 98%;
-    --color-secondary: 210 40% 96.1%;
-    --color-secondary-foreground: 222.2 47.4% 11.2%;
-    --color-accent: 210 40% 96.1%;
-    --color-accent-foreground: 222.2 47.4% 11.2%;
-    --color-muted: 210 40% 96.1%;
-    --color-muted-foreground: 215.4 16.3% 46.9%;
-    --color-card: 0 0% 100%;
-    --color-card-foreground: 222.2 84% 4.9%;
-    --color-border: 214.3 31.8% 91.4%;
-    --color-input: 214.3 31.8% 91.4%;
-    --color-ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+/* ============================================
+   BRAND COLORS - Customize these per project
+   ============================================ */
+:root {
+  /* Brand Identity Colors - GANTI WARNA DI SINI */
+  --color-primary: #f59e0b;        /* Gold/Amber - Ganti sesuai brand */
+  --color-primary-hover: #d97706;  /* Darker gold */
+  --color-primary-active: #b45309; /* Even darker gold */
+  --color-primary-light: #fffbeb;   /* Light gold untuk backgrounds */
+  --color-primary-light-dark: #78350f; /* Light gold untuk dark mode */
+
+  --color-secondary: #d97706;      /* Secondary brand color */
+  --color-secondary-hover: #b45309;
+
+  --color-accent: #fbbf24;         /* Accent color */
+
+  /* Focus color */
+  --color-ring: #f59e0b;
+}
+
+/* Dark Mode overrides */
+.dark {
+  --color-primary-light: #78350f;
+  --color-ring: #f59e0b;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+@layer base {
+  * {
+    border-color: #e5e5e5;
   }
 
-  .dark {
-    --color-background: 222.2 84% 4.9%;
-    --color-foreground: 210 40% 98%;
-    --color-primary: 217.2 91.2% 59.8%;
-    --color-primary-foreground: 222.2 47.4% 11.2%;
-    --color-secondary: 217.2 32.6% 17.5%;
-    --color-secondary-foreground: 210 40% 98%;
-    --color-accent: 217.2 32.6% 17.5%;
-    --color-accent-foreground: 210 40% 98%;
-    --color-muted: 217.2 32.6% 17.5%;
-    --color-muted-foreground: 215 20.2% 65.1%;
-    --color-card: 222.2 84% 4.9%;
-    --color-card-foreground: 210 40% 98%;
-    --color-border: 217.2 32.6% 17.5%;
-    --color-input: 217.2 32.6% 17.5%;
-    --color-ring: 224.3 76.3% 48%;
+  body {
+    background-color: #ffffff;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-ring);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    ::selection {
+      background-color: color-mix(in srgb, var(--color-ring) 15%, transparent);
+    }
+  }
+
+  /* Minimal scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #e5e5e5;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #737373;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+/* Dark Mode */
+.dark {
+  --color-border: #262626;
+}
+
+.dark body {
+  background-color: #0a0a0a;
+  color: #fafafa;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #262626;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}
+
+@layer utilities {
+  /* Primary brand utilities - GUNAKAN INI */
+  .bg-primary {
+    background-color: var(--color-primary);
   }
-  body {
-    @apply bg-background text-foreground;
+
+  .bg-primary\/95 {
+    background-color: hsl(from var(--color-primary) h s 95% / 0.95);
+  }
+
+  .bg-primary\/90 {
+    background-color: hsl(from var(--color-primary) h s 90% / 0.9);
+  }
+
+  .hover\:bg-primary:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  .active\:bg-primary:active {
+    background-color: var(--color-primary-active);
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .text-primary\/95 {
+    color: hsl(from var(--color-primary) h s 95% / 0.95);
+  }
+
+  .hover\:text-primary:hover {
+    color: var(--color-primary-hover);
+  }
+
+  .border-primary {
+    border-color: var(--color-primary);
+  }
+
+  .ring-primary {
+    --tw-ring-color: var(--color-ring);
+  }
+
+  .bg-primary-light {
+    background-color: var(--color-primary-light);
+  }
+
+  .dark .bg-primary-light {
+    background-color: var(--color-primary-light-dark);
+  }
+
+  .text-primary-light {
+    color: var(--color-primary);
+  }
+
+  /* Secondary utilities */
+  .bg-secondary {
+    background-color: var(--color-secondary);
+  }
+
+  .hover\:bg-secondary:hover {
+    background-color: var(--color-secondary-hover);
+  }
+
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+
+  /* Accent utilities */
+  .bg-accent {
+    background-color: var(--color-accent);
+  }
+
+  .text-accent {
+    color: var(--color-accent);
+  }
+
+  /* Ring utilities */
+  .focus-visible\:ring-primary:focus-visible {
+    --tw-ring-color: var(--color-ring);
+  }
+
+  /* Glass effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .glass {
+      background: color-mix(in srgb, #ffffff 90%, transparent);
+    }
+  }
+
+  .dark .glass {
+    background: rgba(23, 23, 23, 0.9);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .dark .glass {
+      background: color-mix(in srgb, #171717 90%, transparent);
+    }
+  }
+
+  .gradient-subtle {
+    background: radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      var(--color-primary),
+      transparent
+    );
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .gradient-subtle {
+      background: radial-gradient(
+        ellipse 80% 50% at 50% -20%,
+        color-mix(in srgb, var(--color-primary) 5%, transparent),
+        transparent
+      );
+    }
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      135deg,
+      #0a0a0a 0%,
+      #737373 100%
+    );
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .dark .text-gradient {
+    background: linear-gradient(
+      135deg,
+      #fafafa 0%,
+      #a3a3a3 100%
+    );
+  }
+
+  .transition-smooth {
+    transition: all .15s cubic-bezier(.4, 0, .2, 1);
+  }
+
+  .transition-smooth-fast {
+    transition: all .1s cubic-bezier(.4, 0, .2, 1);
   }
 }
