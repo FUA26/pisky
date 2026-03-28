@@ -9,6 +9,7 @@
 **Tech Stack:** Next.js 16.2.1+, React 19, TypeScript 5.9.3+, ESLint, Prettier, Lefthook, Commitlint
 
 **NJB Reference:** Before starting, check `/home/acn/acn/Next-js-Boilerplate` for:
+
 - ESLint configuration (adapt to ESLint, not Oxlint)
 - Prettier configuration
 - TypeScript configuration
@@ -20,6 +21,7 @@
 ### Task 1: Create Git Repository and Initial Setup
 
 **Files:**
+
 - Create: `.gitignore`
 - Create: `README.md`
 
@@ -92,7 +94,7 @@ EOF
 
 - [ ] **Step 3: Create initial README**
 
-```bash
+````bash
 cat > README.md << 'EOF'
 # Pisky Boilerplate
 
@@ -107,7 +109,7 @@ cat > README.md << 'EOF'
 ```bash
 npm install
 npm run dev
-```
+````
 
 ## Documentation
 
@@ -127,20 +129,22 @@ See [docs/PROGRESS.md](docs/PROGRESS.md) for implementation progress.
 
 MIT
 EOF
-```
+
+````
 
 - [ ] **Step 4: Commit initial setup**
 
 ```bash
 git add .gitignore README.md
 git commit -m "chore: initialize repository with gitignore and readme"
-```
+````
 
 ---
 
 ### Task 2: Initialize Next.js Project
 
 **Files:**
+
 - Create: `package.json`
 - Create: `next.config.ts`
 - Create: `tsconfig.json`
@@ -260,6 +264,7 @@ git commit -m "feat: initialize Next.js 16 project with TypeScript and Tailwind"
 ### Task 3: Configure TypeScript (Strict but Pragmatic)
 
 **Files:**
+
 - Modify: `tsconfig.json`
 
 - [ ] **Step 1: Check NJB TypeScript config for reference**
@@ -330,6 +335,7 @@ git commit -m "chore: configure TypeScript with strict mode and path aliases"
 ### Task 4: Install and Configure ESLint (Relaxed, AI-Friendly)
 
 **Files:**
+
 - Create: `eslint.config.mjs`
 - Modify: `package.json`
 
@@ -414,6 +420,7 @@ git commit -m "chore: configure ESLint with relaxed AI-friendly rules"
 ### Task 5: Install and Configure Prettier
 
 **Files:**
+
 - Create: `.prettierrc`
 - Create: `.prettierignore`
 
@@ -486,6 +493,7 @@ git commit -m "chore: configure Prettier with Tailwind plugin"
 ### Task 6: Create Feature-Based Folder Structure
 
 **Files:**
+
 - Create: `src/features/.gitkeep`
 - Create: `src/shared/components/.gitkeep`
 - Create: `src/shared/hooks/.gitkeep`
@@ -528,18 +536,20 @@ cat > docs/guide/architecture.md << 'EOF'
 ## Project Structure
 
 ```
+
 pisky/
-├── app/                    # Next.js App Router
-├── features/               # Feature modules
-│   ├── auth/              # Authentication feature
-│   ├── database/          # Database feature
-│   └── monitoring/        # Monitoring feature
-├── shared/                # Shared/reusable code
-│   ├── components/        # UI components
-│   ├── hooks/             # Shared hooks
-│   ├── utils/             # Utilities
-│   └── types/             # Shared types
-└── config/                # Configuration
+├── app/ # Next.js App Router
+├── features/ # Feature modules
+│ ├── auth/ # Authentication feature
+│ ├── database/ # Database feature
+│ └── monitoring/ # Monitoring feature
+├── shared/ # Shared/reusable code
+│ ├── components/ # UI components
+│ ├── hooks/ # Shared hooks
+│ ├── utils/ # Utilities
+│ └── types/ # Shared types
+└── config/ # Configuration
+
 ```
 
 ## Feature-Based Architecture
@@ -567,6 +577,7 @@ git commit -m "feat: create feature-based folder structure"
 ### Task 7: Install and Configure Lefthook
 
 **Files:**
+
 - Create: `lefthook.yml`
 - Modify: `package.json`
 
@@ -632,6 +643,7 @@ git commit -m "chore: configure Lefthook for git hooks"
 ### Task 8: Install and Configure Commitlint + Commitizen
 
 **Files:**
+
 - Create: `commitlint.config.ts`
 - Modify: `package.json`
 
@@ -734,6 +746,7 @@ git commit -m "chore: configure Commitlint and Commitizen for conventional commi
 ### Task 9: Create VSCode Configuration
 
 **Files:**
+
 - Create: `.vscode/settings.json`
 - Create: `.vscode/extensions.json`
 - Create: `.vscode/tasks.json`
@@ -831,12 +844,13 @@ git commit -m "chore: configure VSCode settings and extensions"
 ### Task 10: Update README and Documentation
 
 **Files:**
+
 - Modify: `README.md`
 - Create: `docs/tutorial/01-project-foundation.md`
 
 - [ ] **Step 1: Update README with Phase 1 completion**
 
-```bash
+````bash
 cat > README.md << 'EOF'
 # Pisky Boilerplate
 
@@ -873,7 +887,7 @@ npm run format
 
 # Commit changes
 npm run commit
-```
+````
 
 ## Project Structure
 
@@ -895,20 +909,21 @@ pisky/
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|-----------|
-| Core | Next.js 16+, React 19, TypeScript |
-| Styling | Tailwind CSS 4 |
-| Code Quality | ESLint, Prettier, Lefthook |
-| Validation | Zod (planned) |
-| Database | DrizzleORM (planned) |
-| Auth | NextAuth.js (planned) |
+| Category     | Technology                        |
+| ------------ | --------------------------------- |
+| Core         | Next.js 16+, React 19, TypeScript |
+| Styling      | Tailwind CSS 4                    |
+| Code Quality | ESLint, Prettier, Lefthook        |
+| Validation   | Zod (planned)                     |
+| Database     | DrizzleORM (planned)              |
+| Auth         | NextAuth.js (planned)             |
 
 ## License
 
 MIT
 EOF
-```
+
+````
 
 - [ ] **Step 2: Create Phase 1 Tutorial**
 
@@ -1049,7 +1064,7 @@ Phase 1 establishes the foundation with:
 
 [Phase 2: Styling System](02-styling-system.md) - Setting up Tailwind CSS 4 and Shadcn UI.
 EOF
-```
+````
 
 - [ ] **Step 3: Commit documentation updates**
 
@@ -1063,6 +1078,7 @@ git commit -m "docs: add Phase 1 completion to README and tutorial"
 ### Task 11: Final Verification and Cleanup
 
 **Files:**
+
 - None (verification only)
 
 - [ ] **Step 1: Run all checks**

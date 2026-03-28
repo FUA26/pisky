@@ -9,6 +9,7 @@
 **Tech Stack:** Tailwind CSS 4, Shadcn UI, CSS Variables
 
 **NJB Reference:** Before starting, check `/home/acn/acn/Next-js-Boilerplate` for:
+
 - Tailwind configuration
 - CSS variables setup
 - Component library patterns
@@ -18,6 +19,7 @@
 ### Task 1: Upgrade to Tailwind CSS 4
 
 **Files:**
+
 - Modify: `package.json`
 - Create: `src/app/globals.css`
 - Modify: `tailwind.config.ts`
@@ -187,6 +189,7 @@ git commit -m "feat: upgrade to Tailwind CSS 4 with CSS variable theming"
 ### Task 2: Initialize Shadcn UI
 
 **Files:**
+
 - Create: `components.json`
 - Create: `src/shared/components/ui/`
 
@@ -256,6 +259,7 @@ git commit -m "feat: initialize Shadcn UI with pisky structure"
 ### Task 3: Install Base UI Components
 
 **Files:**
+
 - Create: `src/shared/components/ui/button.tsx`
 - Create: `src/shared/components/ui/input.tsx`
 - Create: `src/shared/components/ui/card.tsx`
@@ -305,6 +309,7 @@ git commit -m "feat: add base UI components from Shadcn"
 ### Task 4: Create Shared Layout Components
 
 **Files:**
+
 - Create: `src/shared/components/layout/header.tsx`
 - Create: `src/shared/components/layout/footer.tsx`
 
@@ -405,6 +410,7 @@ git commit -m "feat: add Header and Footer layout components"
 ### Task 5: Create Theme Provider
 
 **Files:**
+
 - Create: `src/shared/components/theme-provider.tsx`
 - Modify: `src/app/layout.tsx`
 
@@ -508,6 +514,7 @@ git commit -m "feat: add theme provider with dark mode support"
 ### Task 6: Update Home Page with Components
 
 **Files:**
+
 - Modify: `src/app/page.tsx`
 
 - [ ] **Step 1: Update home page to showcase components**
@@ -583,6 +590,7 @@ git commit -m "feat: update home page with component showcase"
 ### Task 7: Create Documentation
 
 **Files:**
+
 - Create: `docs/tutorial/02-styling-system.md`
 - Modify: `README.md`
 
@@ -703,6 +711,7 @@ git commit -m "docs: add Phase 2 tutorial and update status"
 ### Task 8: Final Verification
 
 **Files:**
+
 - None (verification only)
 
 - [ ] **Step 1: Run all checks**

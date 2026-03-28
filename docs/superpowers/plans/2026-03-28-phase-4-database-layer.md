@@ -15,6 +15,7 @@
 ### Task 1: Install DrizzleORM and Dependencies
 
 **Files:**
+
 - Modify: `package.json`
 
 - [ ] **Step 1: Check NJB database setup**
@@ -54,6 +55,7 @@ git commit -m "feat: install DrizzleORM and PGlite dependencies"
 ### Task 2: Configure Drizzle
 
 **Files:**
+
 - Create: `drizzle.config.ts`
 - Create: `src/config/database.ts`
 
@@ -134,6 +136,7 @@ git commit -m "feat: configure DrizzleORM with PGlite"
 ### Task 3: Create Database Schema
 
 **Files:**
+
 - Create: `src/features/database/models/schema.ts`
 - Create: `src/features/database/models/index.ts`
 
@@ -219,6 +222,7 @@ git commit -m "feat: create base database schema with users table"
 ### Task 4: Setup Migration System
 
 **Files:**
+
 - Create: `src/features/database/migrations/.gitkeep`
 - Create: `src/features/database/migrations/migrate.ts`
 
@@ -298,6 +302,7 @@ git commit -m "feat: setup migration system and seed script"
 ### Task 5: Create Database Utilities
 
 **Files:**
+
 - Create: `src/features/database/utils/queries.ts`
 - Create: `src/features/database/utils/index.ts`
 
@@ -360,6 +365,7 @@ git commit -m "feat: add database query utilities"
 ### Task 6: Create Feature Exports
 
 **Files:**
+
 - Create: `src/features/database/index.ts`
 
 - [ ] **Step 1: Create database feature barrel export**
@@ -385,6 +391,7 @@ git commit -m "chore: add database feature barrel export"
 ### Task 7: Update Documentation
 
 **Files:**
+
 - Create: `docs/tutorial/04-database-layer.md`
 
 - [ ] **Step 1: Create Phase 4 tutorial**
@@ -509,6 +516,7 @@ git tag -a phase-4-database -m "Phase 4: Database Layer complete"
 ## Summary
 
 Phase 4 establishes the database layer:
+
 - ✅ DrizzleORM configured
 - ✅ PGlite for local development
 - ✅ Database schema with users table

@@ -15,6 +15,7 @@
 ### Task 1: Install and Configure T3 Env
 
 **Files:**
+
 - Create: `src/config/env.ts`
 - Create: `.env.example`
 - Modify: `package.json`
@@ -94,6 +95,7 @@ git commit -m "feat: configure T3 Env for type-safe environment variables"
 ### Task 2: Setup LogTape Logging
 
 **Files:**
+
 - Create: `src/config/logging.ts`
 - Create: `src/shared/utils/logger.ts`
 
@@ -221,6 +223,7 @@ git commit -m "feat: configure LogTape for structured logging"
 ### Task 3: Create Utility Functions
 
 **Files:**
+
 - Create: `src/shared/utils/date.ts`
 - Create: `src/shared/utils/number.ts`
 - Modify: `src/shared/utils/cn.ts` (already exists)
@@ -341,6 +344,7 @@ git commit -m "feat: add utility functions for date, number, and string formatti
 ### Task 4: Create Type Definitions
 
 **Files:**
+
 - Create: `src/shared/types/common.ts`
 - Create: `src/shared/types/api.ts`
 
@@ -409,6 +413,7 @@ git commit -m "feat: add common and API type definitions"
 ### Task 5: Create Configuration Exports
 
 **Files:**
+
 - Create: `src/config/index.ts`
 
 - [ ] **Step 1: Create config barrel export**
@@ -432,6 +437,7 @@ git commit -m "chore: add config barrel export"
 ### Task 6: Update Documentation
 
 **Files:**
+
 - Create: `docs/tutorial/03-core-infrastructure.md`
 - Modify: `README.md`
 
@@ -549,6 +555,7 @@ git tag -a phase-3-infrastructure -m "Phase 3: Core Infrastructure complete"
 ## Summary
 
 Phase 3 establishes core infrastructure:
+
 - ✅ T3 Env for type-safe env vars
 - ✅ LogTape for structured logging
 - ✅ Utility functions created

@@ -15,6 +15,7 @@
 ### Task 1: Install NextAuth.js v5
 
 **Files:**
+
 - Modify: `package.json`
 
 - [ ] **Step 1: Install NextAuth.js v5**
@@ -117,6 +118,7 @@ git commit -m "feat: install NextAuth.js v5 and auth dependencies"
 ### Task 2: Configure NextAuth.js
 
 **Files:**
+
 - Create: `src/config/auth.ts`
 - Create: `src/app/api/auth/[...nextauth]/route.ts`
 
@@ -235,6 +237,7 @@ git commit -m "feat: configure NextAuth.js with credentials and OAuth providers"
 ### Task 3: Create Auth Types and Hooks
 
 **Files:**
+
 - Create: `src/features/auth/types/auth.ts`
 - Create: `src/features/auth/hooks/use-session.ts`
 
@@ -285,6 +288,7 @@ git commit -m "feat: add auth types and hooks"
 ### Task 4: Create Auth UI Components
 
 **Files:**
+
 - Create: `src/features/auth/components/sign-in-form.tsx`
 - Create: `src/features/auth/components/sign-out-button.tsx`
 - Create: `src/shared/components/auth-provider.tsx`
@@ -438,6 +442,7 @@ git commit -m "feat: add auth UI components"
 ### Task 5: Create Auth Pages
 
 **Files:**
+
 - Create: `src/app/(auth)/sign-in/page.tsx`
 - Create: `src/app/(auth)/layout.tsx`
 
@@ -553,6 +558,7 @@ git commit -m "feat: add sign-in page and auth layout"
 ### Task 6: Create Protected Route Middleware
 
 **Files:**
+
 - Create: `src/middleware.ts`
 
 - [ ] **Step 1: Create auth middleware**
@@ -597,6 +603,7 @@ git commit -m "feat: add protected route middleware"
 ### Task 7: Update User Schema for Password Hash
 
 **Files:**
+
 - Modify: `src/features/database/models/schema.ts`
 
 - [ ] **Step 1: Add password field to user schema**
@@ -645,6 +652,7 @@ git commit -m "feat: add password hash field to users table"
 ### Task 8: Update Documentation
 
 **Files:**
+
 - Create: `docs/tutorial/05-authentication.md`
 
 - [ ] **Step 1: Create Phase 5 tutorial**
@@ -755,6 +763,7 @@ git tag -a phase-5-auth -m "Phase 5: Authentication complete"
 ## Summary
 
 Phase 5 adds authentication:
+
 - ✅ NextAuth.js v5 configured
 - ✅ Credentials provider
 - ✅ OAuth providers (GitHub, Google)

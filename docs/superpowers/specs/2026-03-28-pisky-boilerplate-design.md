@@ -24,6 +24,7 @@ Create a personalized Next.js 16+ boilerplate called **pisky**, inspired by Next
 ### 1.3 Inspiration
 
 Analyzed from: `/home/acn/acn/Next-js-Boilerplate`
+
 - Used as reference only, not direct copy
 - Key concepts retained, implementation adapted
 
@@ -33,82 +34,82 @@ Analyzed from: `/home/acn/acn/Next-js-Boilerplate`
 
 ### 2.1 Core Technologies
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Next.js | 16.2.1+ | Framework with App Router |
-| React | 19.2.4+ | UI Library |
-| TypeScript | 5.9.3+ | Type Safety |
-| Node.js | 22+ | Runtime Environment |
+| Technology | Version | Purpose                   |
+| ---------- | ------- | ------------------------- |
+| Next.js    | 16.2.1+ | Framework with App Router |
+| React      | 19.2.4+ | UI Library                |
+| TypeScript | 5.9.3+  | Type Safety               |
+| Node.js    | 22+     | Runtime Environment       |
 
 ### 2.2 Styling
 
-| Technology | Purpose |
-|------------|---------|
-| Tailwind CSS | 4.x Utility-first CSS |
-| Shadcn UI | Component library (copy-paste) |
-| CSS Variables | Flexible theming system |
+| Technology    | Purpose                        |
+| ------------- | ------------------------------ |
+| Tailwind CSS  | 4.x Utility-first CSS          |
+| Shadcn UI     | Component library (copy-paste) |
+| CSS Variables | Flexible theming system        |
 
 ### 2.3 Database & ORM
 
-| Technology | Purpose |
-|------------|---------|
-| DrizzleORM | Type-safe ORM |
-| PGlite | Local development database |
+| Technology | Purpose                                 |
+| ---------- | --------------------------------------- |
+| DrizzleORM | Type-safe ORM                           |
+| PGlite     | Local development database              |
 | PostgreSQL | Production database (provider-agnostic) |
 
 ### 2.4 Authentication
 
-| Technology | Purpose |
-|------------|---------|
-| NextAuth.js v5 | Authentication framework |
-| Credentials | Username/password auth |
-| OAuth | Social auth (GitHub, Google) |
+| Technology     | Purpose                      |
+| -------------- | ---------------------------- |
+| NextAuth.js v5 | Authentication framework     |
+| Credentials    | Username/password auth       |
+| OAuth          | Social auth (GitHub, Google) |
 
 ### 2.5 Validation & Forms
 
-| Technology | Purpose |
-|------------|---------|
-| Zod | Schema validation |
-| React Hook Form | Form management |
+| Technology      | Purpose           |
+| --------------- | ----------------- |
+| Zod             | Schema validation |
+| React Hook Form | Form management   |
 
 ### 2.6 Code Quality
 
-| Technology | Purpose |
-|------------|---------|
-| ESLint | Linting (relaxed rules) |
-| Prettier | Code formatting |
-| Lefthook | Git hooks |
-| Commitlint | Commit convention |
-| Commitizen | Commit CLI |
-| Knip | Unused dependency detection |
+| Technology | Purpose                     |
+| ---------- | --------------------------- |
+| ESLint     | Linting (relaxed rules)     |
+| Prettier   | Code formatting             |
+| Lefthook   | Git hooks                   |
+| Commitlint | Commit convention           |
+| Commitizen | Commit CLI                  |
+| Knip       | Unused dependency detection |
 
 ### 2.7 Testing
 
-| Technology | Purpose |
-|------------|---------|
-| Vitest | Unit testing (basic setup) |
-| Playwright | E2E testing (basic setup) |
+| Technology | Purpose                    |
+| ---------- | -------------------------- |
+| Vitest     | Unit testing (basic setup) |
+| Playwright | E2E testing (basic setup)  |
 
 ### 2.8 Monitoring & Logging
 
-| Technology | Purpose |
-|------------|---------|
-| Sentry | Error monitoring |
-| LogTape | Structured logging |
-| Better Stack | Log management |
+| Technology   | Purpose            |
+| ------------ | ------------------ |
+| Sentry       | Error monitoring   |
+| LogTape      | Structured logging |
+| Better Stack | Log management     |
 
 ### 2.9 Internationalization
 
-| Technology | Purpose |
-|------------|---------|
-| next-intl | i18n support |
+| Technology | Purpose      |
+| ---------- | ------------ |
+| next-intl  | i18n support |
 
 ### 2.10 CI/CD & Deployment
 
-| Technology | Purpose |
-|------------|---------|
-| GitHub Actions | CI/CD workflows |
-| Docker | Containerization |
+| Technology       | Purpose              |
+| ---------------- | -------------------- |
+| GitHub Actions   | CI/CD workflows      |
+| Docker           | Containerization     |
 | Semantic Release | Changelog generation |
 
 ---
@@ -201,6 +202,7 @@ pisky/
 ### 3.4 Error Handling
 
 Unified error handling strategy:
+
 - Client errors: React Error Boundaries
 - Server errors: Standardized API responses
 - External errors: Try-catch with logging to Sentry
@@ -211,60 +213,70 @@ Unified error handling strategy:
 ## 4. Implementation Phases
 
 ### Phase 1: Project Foundation
+
 **Branch:** `feat/project-foundation`
 **Tutorial:** `docs/tutorial/01-project-foundation.md`
 
 Initialize Next.js project with TypeScript, configure ESLint (relaxed), Prettier, Lefthook, Commitlint, and create feature-based folder structure.
 
 ### Phase 2: Styling System
+
 **Branch:** `feat/styling-system`
 **Tutorial:** `docs/tutorial/02-styling-system.md`
 
 Setup Tailwind CSS 4 with CSS variables for flexible theming, initialize Shadcn UI, and install base components.
 
 ### Phase 3: Core Infrastructure
+
 **Branch:** `feat/core-infrastructure`
 **Tutorial:** `docs/tutorial/03-core-infrastructure.md`
 
 Configure T3 Env for type-safe environment variables, setup LogTape logging, and create utility functions.
 
 ### Phase 4: Database Layer
+
 **Branch:** `feat/database-layer`
 **Tutorial:** `docs/tutorial/04-database-layer.md`
 
 Install DrizzleORM, setup PGlite for local development, configure Drizzle Kit, and create base schema with migrations.
 
 ### Phase 5: Authentication
+
 **Branch:** `feat/authentication-nextauth`
 **Tutorial:** `docs/tutorial/05-authentication.md`
 
 Setup NextAuth.js v5 with credentials and OAuth providers, create auth feature module with UI pages.
 
 ### Phase 6: API Layer
+
 **Branch:** `feat/api-layer`
 **Tutorial:** `docs/tutorial/06-api-layer.md`
 
 Create API route handler pattern, setup Zod validation middleware, implement unified error handling.
 
 ### Phase 7: Testing Setup
+
 **Branch:** `feat/testing-setup`
 **Tutorial:** `docs/tutorial/07-testing-setup.md`
 
 Configure Vitest for unit testing and Playwright for E2E testing with basic setup (pragmatic approach).
 
 ### Phase 8: Error Monitoring
+
 **Branch:** `feat/error-monitoring`
 **Tutorial:** `docs/tutorial/08-error-monitoring.md`
 
 Integrate Sentry for error monitoring with Spotlight for development, setup error boundaries.
 
 ### Phase 9: CI/CD & Deployment
+
 **Branch:** `feat/cicd-deployment`
 **Tutorial:** `docs/tutorial/09-cicd-deployment.md`
 
 Create Dockerfile with multi-stage build, setup docker-compose, configure GitHub Actions workflows and Semantic Release.
 
 ### Phase 10: Final Polish
+
 **Branch:** `feat/final-polish`
 **Tutorial:** `docs/tutorial/10-final-polish.md`
 
@@ -303,6 +315,7 @@ Complete README, create architecture docs, add customization guide, and final ve
 ### 5.4 Tailwind CSS Variables
 
 Flexible theming with CSS variables:
+
 - `--primary`
 - `--secondary`
 - `--accent`
@@ -330,6 +343,7 @@ main (protected)
 ### 6.2 Commit Convention
 
 Following Conventional Commits:
+
 - `feat:` - New feature
 - `fix:` - Bug fix
 - `docs:` - Documentation
@@ -378,6 +392,7 @@ Following Conventional Commits:
 ### 8.1 Tutorial Series
 
 Each phase produces one tutorial post:
+
 - Written in English
 - Step-by-step format
 - Includes verification steps
@@ -407,6 +422,7 @@ docs/
 ## 9. Progress Tracking
 
 Progress tracked in `docs/PROGRESS.md` with:
+
 - Phase checklist
 - Task breakdown per phase
 - Milestone tracking
@@ -458,16 +474,16 @@ The following are NOT included in initial implementation but noted for future re
 
 ## Appendix A: Key Differences from Next-js-Boilerplate
 
-| Aspect | Next-js-Boilerplate | Pisky |
-|--------|---------------------|-------|
-| Linter | Oxlint | ESLint |
-| Formatter | Oxfmt | Prettier |
-| Auth | Clerk | NextAuth.js |
-| Structure | Standard | Feature-based |
-| UI | Minimalist | Shadcn UI |
-| Testing | Comprehensive | Pragmatic (minimum) |
-| CI/CD Review | CodeRabbit | None |
-| Production DB | Neon | Provider-agnostic |
+| Aspect        | Next-js-Boilerplate | Pisky               |
+| ------------- | ------------------- | ------------------- |
+| Linter        | Oxlint              | ESLint              |
+| Formatter     | Oxfmt               | Prettier            |
+| Auth          | Clerk               | NextAuth.js         |
+| Structure     | Standard            | Feature-based       |
+| UI            | Minimalist          | Shadcn UI           |
+| Testing       | Comprehensive       | Pragmatic (minimum) |
+| CI/CD Review  | CodeRabbit          | None                |
+| Production DB | Neon                | Provider-agnostic   |
 
 ---
 
@@ -526,18 +542,19 @@ For each phase/task:
 
 When referencing NJB, ALWAYS account for these differences:
 
-| Aspect | NJB | Pisky | Impact |
-|--------|-----|-------|--------|
-| Linter | Oxlint | ESLint | Different config files, rules |
-| Formatter | Oxfmt | Prettier | Different formatting approach |
-| Auth | Clerk | NextAuth | Completely different implementation |
-| Structure | Standard | Feature-based | Code must be reorganized |
-| UI | Minimalist | Shadcn | Component source differs |
-| DB Provider | Neon-specific | Agnostic | No hardcoded provider refs |
+| Aspect      | NJB           | Pisky         | Impact                              |
+| ----------- | ------------- | ------------- | ----------------------------------- |
+| Linter      | Oxlint        | ESLint        | Different config files, rules       |
+| Formatter   | Oxfmt         | Prettier      | Different formatting approach       |
+| Auth        | Clerk         | NextAuth      | Completely different implementation |
+| Structure   | Standard      | Feature-based | Code must be reorganized            |
+| UI          | Minimalist    | Shadcn        | Component source differs            |
+| DB Provider | Neon-specific | Agnostic      | No hardcoded provider refs          |
 
 ### B.4 What to Extract from NJB
 
 ✅ **Extract and Adapt:**
+
 - Configuration patterns (adjust for our tools)
 - Testing approaches (simplified for our needs)
 - Error handling patterns
@@ -546,6 +563,7 @@ When referencing NJB, ALWAYS account for these differences:
 - Integration setups (Sentry, LogTape, etc.)
 
 ❌ **Do NOT Copy:**
+
 - Clerk-specific code (we use NextAuth)
 - Neon-specific code (we're agnostic)
 - Oxlint/Oxfmt configs (we use ESLint/Prettier)
@@ -579,5 +597,5 @@ grep -A 10 "feature-name" /home/acn/acn/Next-js-Boilerplate/package.json
 
 ---
 
-*Document Version: 1.1*
-*Last Updated: 2026-03-28*
+_Document Version: 1.1_
+_Last Updated: 2026-03-28_

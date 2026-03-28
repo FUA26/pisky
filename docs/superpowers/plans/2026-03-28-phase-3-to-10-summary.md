@@ -13,6 +13,7 @@
 **Goal:** Configure T3 Env for type-safe environment variables, setup LogTape logging, and create utility functions.
 
 **Key Tasks:**
+
 1. Install and configure T3 Env
 2. Setup LogTape for structured logging
 3. Create utility functions (cn, formatDate, etc.)
@@ -20,6 +21,7 @@
 5. Create config module structure
 
 **NJB Reference Check:**
+
 - `/home/acn/acn/Next-js-Boilerplate/src/env.js` for env validation
 - `/home/acn/acn/Next-js-Boilerplate/src/libs/LogTape.ts` for logging setup
 
@@ -32,6 +34,7 @@
 **Goal:** Install DrizzleORM, setup PGlite for local development, configure Drizzle Kit, and create base schema with migrations.
 
 **Key Tasks:**
+
 1. Install DrizzleORM and dependencies
 2. Setup PGlite for local development
 3. Configure Drizzle Kit
@@ -41,6 +44,7 @@
 7. Add seed scripts
 
 **NJB Reference Check:**
+
 - `/home/acn/acn/Next-js-Boilerplate/src/models/Schema.ts` for schema patterns
 - `/home/acn/acn/Next-js-Boilerplate/drizzle.config.ts` for config
 - `/home/acn/acn/Next-js-Boilerplate/src/libs/PGlite.ts` for PGlite setup
@@ -54,6 +58,7 @@
 **Goal:** Setup NextAuth.js v5 with credentials and OAuth providers, create auth feature module with UI pages.
 
 **Key Tasks:**
+
 1. Install NextAuth.js v5
 2. Configure auth options
 3. Setup credentials provider
@@ -64,6 +69,7 @@
 8. Add protected route middleware
 
 **NJB Reference Check:**
+
 - `/home/acn/acn/Next-js-Boilerplate/src/libs/Clerk.ts` - NOT used (we use NextAuth)
 - Check general auth patterns only, implementation differs completely
 
@@ -76,6 +82,7 @@
 **Goal:** Create API route handler pattern, setup Zod validation middleware, implement unified error handling.
 
 **Key Tasks:**
+
 1. Create API response types
 2. Build error handler middleware
 3. Setup Zod validation middleware
@@ -84,6 +91,7 @@
 6. Document API patterns
 
 **NJB Reference Check:**
+
 - `/home/acn/acn/Next-js-Boilerplate/src/app/api/` for API patterns
 - `/home/acn/acn/Next-js-Boilerplate/src/validations/` for validation patterns
 
@@ -96,6 +104,7 @@
 **Goal:** Configure Vitest for unit testing and Playwright for E2E testing with basic setup (pragmatic approach).
 
 **Key Tasks:**
+
 1. Install Vitest and dependencies
 2. Configure Vitest
 3. Create example unit tests
@@ -105,6 +114,7 @@
 7. Add test scripts to package.json
 
 **NJB Reference Check:**
+
 - `/home/acn/acn/Next-js-Boilerplate/vitest.config.mts` for Vitest config
 - `/home/acn/acn/Next-js-Boilerplate/playwright.config.ts` for Playwright config
 
@@ -117,6 +127,7 @@
 **Goal:** Integrate Sentry for error monitoring with Spotlight for development, setup error boundaries.
 
 **Key Tasks:**
+
 1. Install Sentry SDK
 2. Configure Sentry for Next.js
 3. Setup Spotlight for development
@@ -125,6 +136,7 @@
 6. Test error tracking
 
 **NJB Reference Check:**
+
 - `/home/acn/acn/Next-js-Boilerplate/src/libs/Sentry.ts` for Sentry setup
 - `/home/acn/acn/Next-js-Boilerplate/sentry.server.config.ts` for config
 
@@ -137,6 +149,7 @@
 **Goal:** Create Dockerfile with multi-stage build, setup docker-compose, configure GitHub Actions workflows and Semantic Release.
 
 **Key Tasks:**
+
 1. Create Dockerfile (multi-stage)
 2. Setup docker-compose for local development
 3. Configure GitHub Actions (CI, lint, test)
@@ -146,6 +159,7 @@
 7. Test Docker build
 
 **NJB Reference Check:**
+
 - `/home/acn/acn/Next-js-Boilerplate/.github/workflows/` for workflow patterns
 - Check Docker patterns if available
 
@@ -158,6 +172,7 @@
 **Goal:** Complete README, create architecture docs, add customization guide, and final verification.
 
 **Key Tasks:**
+
 1. Complete README with all sections
 2. Create architecture documentation
 3. Write customization guide
@@ -170,18 +185,18 @@
 
 ## Quick Reference
 
-| Phase | Focus | Key Technologies |
-|-------|-------|------------------|
-| 1 | Foundation | Next.js, TS, ESLint, Prettier |
-| 2 | Styling | Tailwind 4, Shadcn UI |
-| 3 | Infrastructure | T3 Env, LogTape |
-| 4 | Database | DrizzleORM, PGlite |
-| 5 | Auth | NextAuth.js |
-| 6 | API | Route Handlers, Zod |
-| 7 | Testing | Vitest, Playwright |
-| 8 | Monitoring | Sentry, LogTape |
-| 9 | CI/CD | Docker, GitHub Actions |
-| 10 | Polish | Documentation |
+| Phase | Focus          | Key Technologies              |
+| ----- | -------------- | ----------------------------- |
+| 1     | Foundation     | Next.js, TS, ESLint, Prettier |
+| 2     | Styling        | Tailwind 4, Shadcn UI         |
+| 3     | Infrastructure | T3 Env, LogTape               |
+| 4     | Database       | DrizzleORM, PGlite            |
+| 5     | Auth           | NextAuth.js                   |
+| 6     | API            | Route Handlers, Zod           |
+| 7     | Testing        | Vitest, Playwright            |
+| 8     | Monitoring     | Sentry, LogTape               |
+| 9     | CI/CD          | Docker, GitHub Actions        |
+| 10    | Polish         | Documentation                 |
 
 ---
 

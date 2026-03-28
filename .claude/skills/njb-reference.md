@@ -5,6 +5,7 @@ Check Next-js-Boilerplate (NJB) for relevant implementations and adapt them to p
 ## When to Use
 
 Use this skill BEFORE implementing any feature or configuration:
+
 - When starting a new phase
 - When implementing a feature that exists in NJB
 - When setting up tooling that NJB also uses
@@ -15,6 +16,7 @@ Use this skill BEFORE implementing any feature or configuration:
 ### Step 1: Understand Current Task
 
 First, clearly define what needs to be implemented:
+
 - What feature/functionality?
 - What are the requirements from the spec?
 - What are the key differences from NJB?
@@ -37,6 +39,7 @@ ls /home/acn/acn/Next-js-Boilerplate/ | grep -i "tool-name"
 ### Step 3: Extract and Analyze
 
 For each relevant finding:
+
 1. Read the implementation in NJB
 2. Identify the core patterns used
 3. Note dependencies and their versions
@@ -45,6 +48,7 @@ For each relevant finding:
 ### Step 4: Adapt to Pisky
 
 Apply these transformations:
+
 - Replace NJB-specific tools with pisky equivalents
 - Restructure to feature-based architecture
 - Apply pisky configuration standards
@@ -53,6 +57,7 @@ Apply these transformations:
 ### Step 5: Document Differences
 
 In tutorial documentation, note:
+
 - What was referenced from NJB
 - What was changed and why
 - Any alternative approaches considered
@@ -61,19 +66,20 @@ In tutorial documentation, note:
 
 Always remember these differences when referencing NJB:
 
-| Category | NJB | Pisky |
-|----------|-----|-------|
-| Linter | Oxlint | ESLint |
-| Formatter | Oxfmt | Prettier |
-| Auth | Clerk | NextAuth.js |
-| Structure | Standard | Feature-based |
-| UI | Custom | Shadcn UI |
-| Production DB | Neon | Provider-agnostic |
-| CI Review | CodeRabbit | None |
+| Category      | NJB        | Pisky             |
+| ------------- | ---------- | ----------------- |
+| Linter        | Oxlint     | ESLint            |
+| Formatter     | Oxfmt      | Prettier          |
+| Auth          | Clerk      | NextAuth.js       |
+| Structure     | Standard   | Feature-based     |
+| UI            | Custom     | Shadcn UI         |
+| Production DB | Neon       | Provider-agnostic |
+| CI Review     | CodeRabbit | None              |
 
 ## What to Extract
 
 ✅ Extract and adapt:
+
 - Configuration patterns (tool-agnostic)
 - Testing approaches (simplified)
 - Error handling patterns
@@ -81,6 +87,7 @@ Always remember these differences when referencing NJB:
 - Integration setups (Sentry, LogTape, etc.)
 
 ❌ Do NOT copy:
+
 - Clerk-specific code
 - Neon-specific code
 - Oxlint/Oxfmt configs
@@ -92,6 +99,7 @@ Always remember these differences when referencing NJB:
 **User:** "I need to setup Sentry integration"
 
 **Assistant using this skill:**
+
 1. Check NJB for Sentry setup
 2. Find: `/home/acn/acn/Next-js-Boilerplate/src/libs/Sentry.ts`
 3. Analyze: Uses Sentry SDK, has Spotlight for dev, DSN from env

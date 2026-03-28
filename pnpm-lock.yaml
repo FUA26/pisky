@@ -48,9 +48,6 @@ importers:
       '@commitlint/prompt-cli':
         specifier: ^20.5.0
         version: 20.5.0(@types/node@20.19.37)(typescript@5.9.3)
-      '@eslint/eslintrc':
-        specifier: ^3.3.5
-        version: 3.3.5
       '@evilmartians/lefthook':
         specifier: ^2.1.4
         version: 2.1.4

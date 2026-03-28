@@ -32,6 +32,7 @@
    - `src/shared/api/response.ts` - success/error helpers
 
 **Verification:**
+
 ```bash
 curl http://localhost:3000/api/health
 curl -X POST http://localhost:3000/api/users -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
@@ -48,6 +49,7 @@ curl -X POST http://localhost:3000/api/users -H "Content-Type: application/json"
 ### Tasks
 
 1. **Install Vitest**
+
    ```bash
    npm install --save-dev vitest @testing-library/react @testing-library/jest-dom @vitejs/plugin-react
    ```
@@ -61,6 +63,7 @@ curl -X POST http://localhost:3000/api/users -H "Content-Type: application/json"
    - `src/shared/utils/__tests__/date.test.ts`
 
 4. **Install Playwright**
+
    ```bash
    npm install --save-dev @playwright/test
    npx playwright install
@@ -74,6 +77,7 @@ curl -X POST http://localhost:3000/api/users -H "Content-Type: application/json"
    - `tests/e2e/home.spec.ts` - basic page load test
 
 **Verification:**
+
 ```bash
 npm run test
 npm run test:e2e
@@ -90,6 +94,7 @@ npm run test:e2e
 ### Tasks
 
 1. **Install Sentry**
+
    ```bash
    npm install @sentry/nextjs
    npx @sentry/wizard@latest -i nextjs
@@ -110,6 +115,7 @@ npm run test:e2e
    - Throw test error to verify Sentry capture
 
 **Verification:**
+
 ```bash
 # Check Sentry dashboard
 # Visit http://localhost:8969 for Spotlight (dev)
@@ -126,6 +132,7 @@ npm run test:e2e
 ### Tasks
 
 1. **Create Dockerfile**
+
    ```dockerfile
    # Multi-stage build
    FROM node:22-alpine AS deps
@@ -142,9 +149,11 @@ npm run test:e2e
    - `.github/workflows/docker.yml` - build and push image
 
 4. **Setup Semantic Release**
+
    ```bash
    npm install --save-dev semantic-release @semantic-release/git @semantic-release/changelog
    ```
+
    - `.releaserc.json` configuration
 
 5. **Add health check endpoint**
@@ -154,6 +163,7 @@ npm run test:e2e
    - `docs/guide/deployment.md`
 
 **Verification:**
+
 ```bash
 docker build -t pisky .
 docker run -p 3000:3000 pisky
@@ -198,6 +208,7 @@ docker run -p 3000:3000 pisky
    - Create .github/content files
 
 **Verification:**
+
 ```bash
 npm run build
 npm run test
@@ -234,6 +245,7 @@ Phase 10: Final Polish
 **Template for detailed phase plan:**
 
 Each phase should be expanded into a detailed plan following the format used in Phases 1-5:
+
 - Goal statement
 - Architecture notes
 - NJB reference points
