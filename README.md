@@ -6,6 +6,7 @@
 
 ✅ Phase 1: Project Foundation - Complete
 ✅ Phase 2: Styling System - Complete
+✅ Phase 3: Core Infrastructure - Complete
 
 ## Features
 
@@ -15,6 +16,8 @@
 - **Tailwind CSS 4** for styling
 - **Shadcn UI** components
 - **Dark mode** support
+- **T3 Env** for type-safe environment variables
+- **Utility functions** for common operations
 - **ESLint + Prettier** for code quality (AI-friendly)
 - **Lefthook** for git hooks
 - **Commitlint + Commitizen** for conventional commits
@@ -25,6 +28,9 @@
 ```bash
 # Install dependencies
 pnpm install
+
+# Copy environment variables
+cp .env.example .env.local
 
 # Start development server
 pnpm run dev
@@ -60,14 +66,15 @@ pisky/
 
 ## Tech Stack
 
-| Category     | Technology                        | Status |
-| ------------ | --------------------------------- | ------ |
-| Core         | Next.js 16+, React 19, TypeScript | ✅     |
-| Styling      | Tailwind CSS 4, Shadcn UI         | ✅     |
-| Code Quality | ESLint, Prettier, Lefthook        | ✅     |
-| Validation   | Zod (planned)                     | ⏳     |
-| Database     | DrizzleORM (planned)              | ⏳     |
-| Auth         | NextAuth.js (planned)             | ⏳     |
+| Category   | Technology                        | Status |
+| ---------- | --------------------------------- | ------ |
+| Core       | Next.js 16+, React 19, TypeScript | ✅     |
+| Styling    | Tailwind CSS 4, Shadcn UI         | ✅     |
+| Env Vars   | T3 Env                            | ✅     |
+| Utilities  | Custom utils                      | ✅     |
+| Validation | Zod                               | ✅     |
+| Database   | DrizzleORM (planned)              | ⏳     |
+| Auth       | NextAuth.js (planned)             | ⏳     |
 
 ## License
 
