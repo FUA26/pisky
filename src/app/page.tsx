@@ -38,7 +38,9 @@ export default function HomePage() {
               An Attio-inspired UI component library. Ultra-clean, typography-driven, and production-ready.
             </p>
             <div className="flex flex-wrap gap-3 pt-4">
-              <Button size="lg">Get Started</Button>
+              <Button size="lg" asChild>
+                <a href="/ref">View Reference</a>
+              </Button>
               <Button variant="outline" size="lg">View Components</Button>
             </div>
           </div>

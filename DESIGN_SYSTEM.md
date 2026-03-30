@@ -4,8 +4,9 @@ An Attio-inspired UI component library built with Radix UI primitives, Tailwind 
 
 ## 🎨 Design Philosophy
 
-This design system is inspired by **Attio's** refined aesthetic, focusing on:
-- **Sophisticated color palette** - Clean whites, refined grays, and subtle blue-teal accents
+This design system features a sophisticated color palette focusing on:
+- **Primary Blue (#1B53D9)** - Trust, professionalism, and stability
+- **Secondary Coral (#E07A5F)** - Warmth, energy, and creative contrast
 - **Premium typography** - Geist Sans font family for excellent readability
 - **Subtle animations** - Purposeful transitions with proper timing functions
 - **Attention to detail** - Refined shadows, borders, and spacing
