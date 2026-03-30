@@ -208,10 +208,16 @@ const Sidebar = React.forwardRef<
         data-side={side}
       >
         <div
+          style={{
+            width:
+              state === "collapsed" && collapsible === "icon"
+                ? "var(--sidebar-width-icon)"
+                : "var(--sidebar-width)",
+            transition: "width 200ms ease-linear",
+          }}
           className={cn(
-            "bg-sidebar relative flex h-svh w-[--sidebar-width] transition-[width] duration-200 ease-linear",
-            side === "left" ? "border-r" : "border-l",
-            "group-data-[state=collapsed][data-collapsible=icon]:w-[--sidebar-width-icon]",
+            "bg-sidebar fixed inset-y-0 flex shrink-0",
+            side === "left" ? "left-0 border-r" : "right-0 border-l",
             variant === "floating" || variant === "inset" ? "m-2 rounded-lg border shadow" : "",
             className
           )}
@@ -284,7 +290,10 @@ const SidebarInset = React.forwardRef<HTMLDivElement, React.ComponentProps<"main
     return (
       <main
         ref={ref}
-        className={cn("relative flex min-h-svh flex-1 flex-col overflow-hidden", className)}
+        className={cn(
+          "peer-data-[state=collapsed][data-collapsible=icon]:md:ml-[--sidebar-width-icon] relative flex min-h-svh flex-1 flex-col overflow-hidden transition-[margin] duration-200 ease-linear md:ml-[--sidebar-width]",
+          className
+        )}
         {...props}
       />
     );
