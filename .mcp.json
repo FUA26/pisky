@@ -2,25 +2,15 @@
   "mcpServers": {
     "shadcn": {
       "command": "npx",
-      "args": [
-        "shadcn@latest",
-        "mcp"
-      ]
+      "args": ["-y", "shadcn@latest", "mcp"]
     },
-    "browser-server": {
-      "command": "browser-use-mcp-server",
-      "args": [
-        "run",
-        "server",
-        "--port",
-        "8000",
-        "--stdio",
-        "--proxy-port",
-        "9000"
-      ],
-      "env": {
-        "OPENAI_API_KEY": "your-api-key"
-      }
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
     }
   }
 }

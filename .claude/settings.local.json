@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(printf:*)",
+      "Bash(xargs sed:*)",
+      "Bash(pnpm run dev:*)",
+      "Bash(curl:*)",
+      "mcp__shadcn__get_item_examples_from_registries",
+      "mcp__shadcn__view_items_in_registries",
+      "Skill(frontend-design)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": ["shadcn", "browser-server"]
+}

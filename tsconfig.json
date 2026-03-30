@@ -18,10 +18,13 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@/features/*": ["./src/features/*"],
-      "@/shared/*": ["./src/shared/*"],
-      "@/config/*": ["./src/config/*"]
+      "@/*": ["./*"],
+      "@/features/*": ["./features/*"],
+      "@/components/*": ["./components/*"],
+      "@/hooks/*": ["./hooks/*"],
+      "@/types/*": ["./types/*"],
+      "@/utils/*": ["./utils/*"],
+      "@/config/*": ["./config/*"]
     },
     "noUnusedLocals": false,
     "noUnusedParameters": false,
