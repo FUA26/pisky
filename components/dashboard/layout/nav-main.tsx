@@ -74,7 +74,6 @@ export function NavMain({
                   asChild
                   tooltip={item.title}
                   isActive={isItemActive}
-                  size="default"
                   className="data-[active=true]:bg-primary/10 data-[active=true]:text-primary hover:bg-primary/5 h-11 py-2.5"
                 >
                   <Link href={item.url} className="gap-3">
@@ -97,7 +96,6 @@ export function NavMain({
                     <SidebarMenuButton
                       tooltip={item.title}
                       isActive={isSubActive}
-                      size="default"
                       className="data-[active=true]:bg-primary/10 data-[active=true]:text-primary hover:bg-primary/5 h-11 py-2.5"
                     >
                       <item.icon className="h-5 w-5" />
@@ -142,7 +140,6 @@ export function NavMain({
                     tooltip={item.title}
                     className="data-[active=true]:bg-primary/10 data-[active=true]:text-primary hover:bg-primary/5 h-11 w-full py-2.5"
                     isActive={isSubActive}
-                    size="default"
                   >
                     <item.icon className="h-5 w-5" />
                     <span className="text-sm font-semibold">{item.title}</span>

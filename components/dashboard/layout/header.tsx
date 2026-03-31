@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IconGithub } from "@tabler/icons-react";
+import { IconBrandGithub } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -49,7 +49,7 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <IconGithub className="h-5 w-5" />
+              <IconBrandGithub className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
             </Link>
           </Button>

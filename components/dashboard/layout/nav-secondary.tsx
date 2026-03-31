@@ -27,7 +27,6 @@ export function NavSecondary({
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 asChild
-                size="sm"
                 className="data-[active=true]:bg-primary/10 data-[active=true]:text-primary hover:bg-primary/5 h-9 py-2"
               >
                 <a href={item.url} className="gap-3">
