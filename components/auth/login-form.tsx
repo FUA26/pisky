@@ -78,11 +78,15 @@ export function LoginForm() {
             type="email"
             placeholder="Enter your email"
             disabled={isLoading}
+            aria-describedby={form.formState.errors.email ? "email-error" : undefined}
+            aria-invalid={!!form.formState.errors.email}
             className="bg-background border-muted/80 focus-visible:ring-primary h-11 rounded-xl pl-10 shadow-none focus-visible:ring-1"
           />
         </div>
         {form.formState.errors.email && (
-          <p className="text-destructive text-sm">{form.formState.errors.email.message}</p>
+          <p id="email-error" className="text-destructive text-sm">
+            {form.formState.errors.email.message}
+          </p>
         )}
       </div>
 
