@@ -1,6 +1,16 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { logAction } from "@/features/admin/audit-logs/service";
-import { getAuditLogs, getEntityAuditLogs } from "@/features/admin/audit-logs/api";
+import {
+  logAction,
+  extractIpAddress,
+  extractUserAgent,
+  logActionFromRequest,
+} from "@/features/admin/audit-logs/service";
+import {
+  getAuditLogs,
+  getEntityAuditLogs,
+  getUserAuditLogs,
+} from "@/features/admin/audit-logs/api";
+import type { NextRequest } from "next/server";
 
 // Mock the database
 vi.mock("@/config/database", () => ({
@@ -333,6 +343,236 @@ describe("Audit Logging Service", () => {
       const result = await getEntityAuditLogs("user", "non-existent-user");
 
       expect(result).toEqual([]);
+    });
+  });
+
+  describe("extractIpAddress", () => {
+    it("should extract IP from x-forwarded-for header", () => {
+      const mockRequest = {
+        headers: {
+          get: vi.fn((header) => {
+            if (header === "x-forwarded-for") return "192.168.1.1, 10.0.0.1";
+            return null;
+          }),
+        },
+      } as unknown as NextRequest;
+
+      const ip = extractIpAddress(mockRequest);
+      expect(ip).toBe("192.168.1.1");
+    });
+
+    it("should fallback to x-real-ip header", () => {
+      const mockRequest = {
+        headers: {
+          get: vi.fn((header) => {
+            if (header === "x-real-ip") return "10.0.0.1";
+            return null;
+          }),
+        },
+      } as unknown as NextRequest;
+
+      const ip = extractIpAddress(mockRequest);
+      expect(ip).toBe("10.0.0.1");
+    });
+
+    it("should return null when no IP headers present", () => {
+      const mockRequest = {
+        headers: {
+          get: vi.fn(() => null),
+        },
+      } as unknown as NextRequest;
+
+      const ip = extractIpAddress(mockRequest);
+      expect(ip).toBeNull();
+    });
+  });
+
+  describe("extractUserAgent", () => {
+    it("should extract user agent from request", () => {
+      const mockRequest = {
+        headers: {
+          get: vi.fn((header) => {
+            if (header === "user-agent") return "Mozilla/5.0";
+            return null;
+          }),
+        },
+      } as unknown as NextRequest;
+
+      const userAgent = extractUserAgent(mockRequest);
+      expect(userAgent).toBe("Mozilla/5.0");
+    });
+
+    it("should return null when no user agent present", () => {
+      const mockRequest = {
+        headers: {
+          get: vi.fn(() => null),
+        },
+      } as unknown as NextRequest;
+
+      const userAgent = extractUserAgent(mockRequest);
+      expect(userAgent).toBeNull();
+    });
+  });
+
+  describe("logActionFromRequest", () => {
+    it("should extract IP and user agent from request", async () => {
+      const { db } = await import("@/config/database");
+
+      const mockRequest = {
+        headers: {
+          get: vi.fn((header) => {
+            const headers: Record<string, string> = {
+              "x-forwarded-for": "192.168.1.1",
+              "user-agent": "TestAgent/1.0",
+            };
+            return headers[header] || null;
+          }),
+        },
+      } as unknown as NextRequest;
+
+      const mockValues = vi.fn().mockReturnValue({
+        returning: vi.fn().mockResolvedValue([
+          {
+            id: "audit-1",
+            userId: "user-1",
+            action: "test.action",
+            entityType: null,
+            entityId: null,
+            oldData: null,
+            newData: null,
+            ipAddress: "192.168.1.1",
+            userAgent: "TestAgent/1.0",
+            timestamp: new Date(),
+          },
+        ]),
+      });
+
+      vi.mocked(db.insert).mockReturnValue({
+        values: mockValues,
+      } as any);
+
+      await logActionFromRequest(mockRequest, {
+        userId: "user-1",
+        action: "test.action",
+      });
+
+      expect(db.insert).toHaveBeenCalled();
+      expect(mockValues).toHaveBeenCalledWith(
+        expect.objectContaining({
+          ipAddress: "192.168.1.1",
+          userAgent: "TestAgent/1.0",
+        })
+      );
+    });
+  });
+
+  describe("getUserAuditLogs", () => {
+    it("should return logs for specific user", async () => {
+      const { db } = await import("@/config/database");
+
+      const mockLogs = [
+        {
+          id: "log-1",
+          userId: "user-1",
+          action: "user.created",
+          entityType: "user",
+          entityId: "user-2",
+          oldData: null,
+          newData: { name: "Test User" },
+          ipAddress: "192.168.1.1",
+          userAgent: "Mozilla",
+          timestamp: new Date(),
+          user: {
+            id: "user-1",
+            name: "Admin User",
+            email: "admin@example.com",
+          },
+        },
+        {
+          id: "log-2",
+          userId: "user-1",
+          action: "user.updated",
+          entityType: "user",
+          entityId: "user-2",
+          oldData: { name: "Test User" },
+          newData: { name: "Updated User" },
+          ipAddress: "192.168.1.1",
+          userAgent: "Mozilla",
+          timestamp: new Date(),
+          user: {
+            id: "user-1",
+            name: "Admin User",
+            email: "admin@example.com",
+          },
+        },
+      ];
+
+      let selectCallCount = 0;
+      vi.mocked(db.select).mockImplementation(() => {
+        selectCallCount++;
+        // First call: count query
+        if (selectCallCount === 1) {
+          return {
+            from: vi.fn().mockReturnValue({
+              where: vi.fn().mockResolvedValue([{ count: 2 }]),
+            }),
+          } as any;
+        }
+        // Second call: logs query
+        return {
+          from: vi.fn().mockReturnValue({
+            innerJoin: vi.fn().mockReturnValue({
+              where: vi.fn().mockReturnValue({
+                orderBy: vi.fn().mockReturnValue({
+                  limit: vi.fn().mockReturnValue({
+                    offset: vi.fn().mockResolvedValue(mockLogs),
+                  }),
+                }),
+              }),
+            }),
+          }),
+        } as any;
+      });
+
+      const logs = await getUserAuditLogs("user-1");
+      expect(logs.logs).toHaveLength(2);
+      expect(logs.logs[0].action).toBe("user.created");
+      expect(logs.total).toBe(2);
+    });
+
+    it("should return empty array when no logs found", async () => {
+      const { db } = await import("@/config/database");
+
+      let selectCallCount = 0;
+      vi.mocked(db.select).mockImplementation(() => {
+        selectCallCount++;
+        // First call: count query
+        if (selectCallCount === 1) {
+          return {
+            from: vi.fn().mockReturnValue({
+              where: vi.fn().mockResolvedValue([{ count: 0 }]),
+            }),
+          } as any;
+        }
+        // Second call: logs query
+        return {
+          from: vi.fn().mockReturnValue({
+            innerJoin: vi.fn().mockReturnValue({
+              where: vi.fn().mockReturnValue({
+                orderBy: vi.fn().mockReturnValue({
+                  limit: vi.fn().mockReturnValue({
+                    offset: vi.fn().mockResolvedValue([]),
+                  }),
+                }),
+              }),
+            }),
+          }),
+        } as any;
+      });
+
+      const logs = await getUserAuditLogs("non-existent-user");
+      expect(logs.logs).toEqual([]);
+      expect(logs.total).toBe(0);
     });
   });
 });
