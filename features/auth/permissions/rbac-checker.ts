@@ -74,8 +74,10 @@ export function hasPermission(
         return { allowed: true, grantedBy: anyPermission as Permission };
       }
 
-      // If user owns the resource and has OWN permission
-      if (currentUserId === resourceOwnerId && normalizedPermissions.has(requiredPerm)) {
+      // If user owns the resource, grant access with OWN permission
+      // Note: We already checked for direct permission above, so this handles
+      // the case where user doesn't have the permission but owns the resource
+      if (currentUserId === resourceOwnerId) {
         return { allowed: true, grantedBy: requiredPerm };
       }
     }
