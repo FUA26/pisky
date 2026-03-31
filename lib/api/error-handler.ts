@@ -184,7 +184,7 @@ export function handleError(
  * Async handler wrapper that catches errors
  */
 export function withErrorHandler<T>(
-  handler: () => Promise<NextResponse<T>>,
+  handler: () => Promise<NextResponse<ApiResponse<T>>>,
   config?: ErrorHandlerConfig
 ): Promise<NextResponse<ApiResponse<T>>> {
   return handler().catch((error) => handleError(error, config));

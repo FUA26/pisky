@@ -30,6 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const { email, password } = parsed.data;
         const db = getDatabase();
+        if (!db) throw new Error("Database not available");
 
         // Find user by email
         const userResult = await db

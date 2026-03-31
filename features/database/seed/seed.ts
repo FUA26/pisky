@@ -4,6 +4,7 @@ import { seedAuthData } from "./auth-seed";
 
 export async function seed() {
   const db = getDatabase();
+  if (!db) throw new Error("Database not available");
 
   // Check if already seeded
   const existing = await db.select().from(users).limit(1);

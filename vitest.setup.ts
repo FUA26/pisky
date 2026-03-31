@@ -24,7 +24,7 @@ vi.mock("next/navigation", () => ({
 // Mock Next.js dynamic routes
 vi.mock("next/dynamic", () => ({
   default: (...args: unknown[]) => {
-    const dynamicModule = vi.fn();
+    const dynamicModule = vi.fn() as any;
     dynamicModule.render = vi.fn();
     return dynamicModule;
   },

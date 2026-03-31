@@ -65,6 +65,7 @@ const PERMISSIONS = [
 export async function seedAuthData() {
   try {
     const db = getDatabase();
+    if (!db) throw new Error("Database not available");
 
     console.log("Seeding roles and permissions...");
 
