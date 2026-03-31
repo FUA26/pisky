@@ -1,6 +1,7 @@
 import { getDatabase } from "@/config/database";
 import { roles, permissions, rolePermissions, users } from "@/features/database/models/schema";
 import { hash } from "bcrypt";
+import { eq } from "drizzle-orm";
 
 const PERMISSIONS = [
   // User Management
@@ -48,90 +49,117 @@ const PERMISSIONS = [
   },
 ];
 
+/**
+ * Seeds the database with initial authentication data including roles, permissions, and a default admin user.
+ *
+ * This function is idempotent - it checks if the admin role already exists before attempting to create data.
+ * If the admin role exists, the function exits early without making any changes.
+ *
+ * Default admin credentials created:
+ * - Email: admin@pisky.com
+ * - Password: admin123
+ *
+ * @throws {Error} If database operations fail (e.g., connection issues, constraint violations)
+ * @returns {Promise<void>}
+ */
 export async function seedAuthData() {
-  const db = getDatabase();
+  try {
+    const db = getDatabase();
 
-  console.log("Seeding roles and permissions...");
+    console.log("Seeding roles and permissions...");
 
-  // Create admin role
-  const adminRole = await db
-    .insert(roles)
-    .values({
-      name: "admin",
-      description: "Administrator with full access to all features",
-    })
-    .returning()
-    .then((rows) => rows[0]);
+    // Idempotency check: Verify if admin role already exists
+    const existingAdminRole = await db
+      .select()
+      .from(roles)
+      .where(eq(roles.name, "admin"))
+      .then((rows) => rows[0]);
 
-  // Create user role
-  const userRole = await db
-    .insert(roles)
-    .values({
-      name: "user",
-      description: "Standard user with basic permissions",
-    })
-    .returning()
-    .then((rows) => rows[0]);
-
-  console.log(`Created roles: admin (${adminRole.id}), user (${userRole.id})`);
-
-  // Insert all permissions
-  const insertedPermissions = await db.insert(permissions).values(PERMISSIONS).returning();
-
-  console.log(`Created ${insertedPermissions.length} permissions`);
-
-  // Assign all permissions to admin role
-  for (const permission of insertedPermissions) {
-    await db.insert(rolePermissions).values({
-      roleId: adminRole.id,
-      permissionId: permission.id,
-    });
-  }
-
-  console.log(`Assigned all permissions to admin role`);
-
-  // Assign basic permissions to user role
-  const basicPermissions = [
-    "USER_READ_OWN",
-    "USER_UPDATE_OWN",
-    "CONTENT_READ_OWN",
-    "CONTENT_CREATE",
-    "CONTENT_UPDATE_OWN",
-    "CONTENT_DELETE_OWN",
-    "FILE_UPLOAD_OWN",
-    "FILE_READ_OWN",
-    "FILE_DELETE_OWN",
-    "ANALYTICS_VIEW",
-  ];
-
-  for (const permName of basicPermissions) {
-    const perm = insertedPermissions.find((p) => p.name === permName);
-    if (perm) {
-      await db.insert(rolePermissions).values({
-        roleId: userRole.id,
-        permissionId: perm.id,
-      });
+    if (existingAdminRole) {
+      console.log("Admin role already exists. Skipping auth seed.");
+      return;
     }
+
+    // Create admin role
+    const [adminRole] = await db
+      .insert(roles)
+      .values({
+        name: "admin",
+        description: "Administrator with full access to all features",
+      })
+      .returning();
+
+    // Create user role
+    const [userRole] = await db
+      .insert(roles)
+      .values({
+        name: "user",
+        description: "Standard user with basic permissions",
+      })
+      .returning();
+
+    console.log(`Created roles: admin (${adminRole.id}), user (${userRole.id})`);
+
+    // Insert all permissions
+    const insertedPermissions = await db.insert(permissions).values(PERMISSIONS).returning();
+
+    console.log(`Created ${insertedPermissions.length} permissions`);
+
+    // Assign all permissions to admin role using bulk insert
+    await db.insert(rolePermissions).values(
+      insertedPermissions.map((permission) => ({
+        roleId: adminRole.id,
+        permissionId: permission.id,
+      }))
+    );
+
+    console.log(`Assigned all permissions to admin role`);
+
+    // Assign basic permissions to user role
+    const basicPermissions = [
+      "USER_READ_OWN",
+      "USER_UPDATE_OWN",
+      "CONTENT_READ_OWN",
+      "CONTENT_CREATE",
+      "CONTENT_UPDATE_OWN",
+      "CONTENT_DELETE_OWN",
+      "FILE_UPLOAD_OWN",
+      "FILE_READ_OWN",
+      "FILE_DELETE_OWN",
+      "ANALYTICS_VIEW",
+    ];
+
+    const userPermissionIds = insertedPermissions
+      .filter((p) => basicPermissions.includes(p.name))
+      .map((p) => ({
+        roleId: userRole.id,
+        permissionId: p.id,
+      }));
+
+    // Bulk insert for user role permissions
+    await db.insert(rolePermissions).values(userPermissionIds);
+
+    console.log(`Assigned ${basicPermissions.length} basic permissions to user role`);
+
+    // Create default admin user (email: admin@pisky.com, password: admin123)
+    const hashedPassword = await hash("admin123", 10);
+
+    const [adminUser] = await db
+      .insert(users)
+      .values({
+        name: "Admin",
+        email: "admin@pisky.com",
+        passwordHash: hashedPassword,
+        emailVerified: new Date(),
+        roleId: adminRole.id,
+      })
+      .returning();
+
+    console.log(`Created default admin user: admin@pisky.com / admin123`);
+
+    console.log("Auth seeding completed!");
+  } catch (error) {
+    console.error("Failed to seed auth data:", error);
+    throw error;
   }
-
-  console.log(`Assigned ${basicPermissions.length} basic permissions to user role`);
-
-  // Create default admin user (email: admin@pisky.com, password: admin123)
-  const hashedPassword = await hash("admin123", 10);
-
-  const adminUser = await db
-    .insert(users)
-    .values({
-      name: "Admin",
-      email: "admin@pisky.com",
-      passwordHash: hashedPassword,
-      emailVerified: new Date(),
-      roleId: adminRole.id,
-    })
-    .returning()
-    .then((rows) => rows[0]);
-
-  console.log(`Created default admin user: admin@pisky.com / admin123`);
-
-  console.log("Auth seeding completed!");
 }
