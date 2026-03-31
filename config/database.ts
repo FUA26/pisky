@@ -24,3 +24,6 @@ export function getDatabase() {
     return db;
   }
 }
+
+// Export a singleton db instance for convenience
+export const db = getDatabase();
