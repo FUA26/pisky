@@ -17,15 +17,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const validatedData = resetPasswordSchema.parse(body);
 
-    const { token } = body as { token: string };
-    const { password } = validatedData;
-
-    if (!token) {
-      return NextResponse.json(
-        { error: "Bad Request", message: "Reset token is required" },
-        { status: 400 }
-      );
-    }
+    const { token, password } = validatedData;
 
     const db = getDatabase()!;
 
@@ -95,7 +87,7 @@ export async function POST(req: Request) {
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json(
-        { error: "Validation Error", message: "Invalid input" },
+        { error: "Validation Error", details: error.issues },
         { status: 400 }
       );
     }
