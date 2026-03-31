@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { getDatabase } from "@/config/database";
 import { roles, permissions, rolePermissions, users } from "@/features/database/models/schema";
 import type { Permission, UserPermissionsContext } from "./rbac-types";
+import { UnauthorizedError, ForbiddenError } from "@/lib/api/error-handler";
 
 // Simple in-memory cache for permissions (5 minute TTL)
 const permissionCache = new Map<string, { context: UserPermissionsContext; expiresAt: number }>();
@@ -85,7 +86,7 @@ export async function requireAuth() {
   const session = await auth();
 
   if (!session?.user) {
-    throw new Error("Unauthorized: Authentication required");
+    throw new UnauthorizedError("Authentication required");
   }
 
   return session;
@@ -100,7 +101,7 @@ export async function requirePermission(userId: string, permission: Permission):
   const allowed = hasPermission(userPermissions, [permission]);
 
   if (!allowed) {
-    throw new Error(`Forbidden: Missing required permission: ${permission}`);
+    throw new ForbiddenError(`Missing required permission: ${permission}`);
   }
 }
 
@@ -116,7 +117,7 @@ export async function requireAnyPermission(
   const allowed = hasPermission(userPermissions, permissions, { strict: false });
 
   if (!allowed) {
-    throw new Error(`Forbidden: Missing one of required permissions: ${permissions.join(", ")}`);
+    throw new ForbiddenError(`Missing one of required permissions: ${permissions.join(", ")}`);
   }
 }
 
@@ -132,7 +133,7 @@ export async function requireAllPermissions(
   const allowed = hasPermission(userPermissions, permissions, { strict: true });
 
   if (!allowed) {
-    throw new Error(`Forbidden: Missing required permissions: ${permissions.join(", ")}`);
+    throw new ForbiddenError(`Missing required permissions: ${permissions.join(", ")}`);
   }
 }
 
