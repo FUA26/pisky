@@ -165,7 +165,7 @@ const Sidebar = React.forwardRef<
     if (collapsible === "none") {
       return (
         <div
-          className={cn("flex h-full w-[--sidebar-width] flex-col", className)}
+          className={cn("flex h-full w-[var(--sidebar-width)] flex-col", className)}
           ref={ref}
           {...props}
         >
@@ -180,7 +180,7 @@ const Sidebar = React.forwardRef<
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"
-            className="w-[--sidebar-width] p-0 [&>button]:hidden"
+            className="w-[var(--sidebar-width)] p-0 [&>button]:hidden"
             style={
               {
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -287,11 +287,21 @@ SidebarRail.displayName = "SidebarRail";
 
 const SidebarInset = React.forwardRef<HTMLDivElement, React.ComponentProps<"main">>(
   ({ className, ...props }, ref) => {
+    const { state, isMobile } = useSidebar();
+    const isCollapsedIcon = state === "collapsed";
+
     return (
       <main
         ref={ref}
+        style={
+          !isMobile
+            ? {
+                marginLeft: isCollapsedIcon ? "var(--sidebar-width-icon)" : "var(--sidebar-width)",
+              }
+            : undefined
+        }
         className={cn(
-          "peer-data-[state=collapsed][data-collapsible=icon]:md:ml-[--sidebar-width-icon] relative flex min-h-svh flex-1 flex-col overflow-hidden transition-[margin] duration-200 ease-linear md:ml-[--sidebar-width]",
+          "relative flex min-h-svh flex-1 flex-col overflow-hidden transition-[margin-left] duration-200 ease-linear",
           className
         )}
         {...props}

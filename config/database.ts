@@ -8,15 +8,15 @@ let client: postgres.Sql<{}> | PGlite | null = null;
 let db: ReturnType<typeof drizzle> | ReturnType<typeof drizzlePGlite> | null = null;
 
 export function getDatabase() {
-  if (process.env.NODE_ENV === "production" && process.env.DATABASE_URL) {
-    // Production: Use PostgreSQL
+  // Use PostgreSQL if DATABASE_URL is set (production or remote dev)
+  if (process.env.DATABASE_URL) {
     if (!client) {
       client = postgres(process.env.DATABASE_URL);
       db = drizzle(client, { schema });
     }
     return db;
   } else {
-    // Development: Use PGlite
+    // Fallback to PGlite for local development without DATABASE_URL
     if (!client) {
       client = new PGlite("./local.db");
       db = drizzlePGlite(client as PGlite, { schema });
