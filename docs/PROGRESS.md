@@ -116,18 +116,18 @@ This document tracks the progress of building **pisky** - a personalized Next.js
 
 **Branch:** `feat/database-layer`
 **Tutorial:** `docs/tutorial/04-database-layer.md`
-**Status:** [ ] Not Started
+**Status:** [x] Complete
 
 | Task                               | Status | Notes                       |
 | ---------------------------------- | ------ | --------------------------- |
-| Install DrizzleORM                 | [ ]    | Core package                |
-| Setup PGlite for local development | [ ]    | Zero-config local DB        |
-| Configure Drizzle Kit              | [ ]    | Migration tool              |
-| Create base schema                 | [ ]    | User model to start         |
-| Setup migration system             | [ ]    | Generate and run migrations |
-| Create database utilities          | [ ]    | Connection, query helpers   |
-| Add seed scripts                   | [ ]    | Development data            |
-| Write tutorial documentation       | [ ]    | ORM and migrations          |
+| Install DrizzleORM                 | [x]    | Core package                |
+| Setup PGlite for local development | [x]    | Zero-config local DB        |
+| Configure Drizzle Kit              | [x]    | Migration tool              |
+| Create base schema                 | [x]    | User model to start         |
+| Setup migration system             | [x]    | Generate and run migrations |
+| Create database utilities          | [x]    | Connection, query helpers   |
+| Add seed scripts                   | [x]    | Development data            |
+| Write tutorial documentation       | [x]    | ORM and migrations          |
 
 ---
 
@@ -135,19 +135,19 @@ This document tracks the progress of building **pisky** - a personalized Next.js
 
 **Branch:** `feat/authentication-nextauth`
 **Tutorial:** `docs/tutorial/05-authentication.md`
-**Status:** [ ] Not Started
+**Status:** [x] Complete
 
 | Task                           | Status | Notes                       |
 | ------------------------------ | ------ | --------------------------- |
-| Install NextAuth.js v5         | [ ]    | Auth.js core                |
-| Setup auth configuration       | [ ]    | Providers, callbacks        |
-| Implement credentials provider | [ ]    | Username/password           |
-| Setup OAuth providers          | [ ]    | GitHub, Google (optional)   |
-| Create auth feature module     | [ ]    | Components, hooks, services |
-| Build auth UI pages            | [ ]    | Sign in, Sign up            |
-| Setup session management       | [ ]    | JWT strategy                |
-| Add protected route middleware | [ ]    | Route protection            |
-| Write tutorial documentation   | [ ]    | NextAuth setup guide        |
+| Install NextAuth.js v5         | [x]    | Auth.js core                |
+| Setup auth configuration       | [x]    | Providers, callbacks        |
+| Implement credentials provider | [x]    | Username/password           |
+| Setup OAuth providers          | [x]    | GitHub, Google (optional)   |
+| Create auth feature module     | [x]    | Components, hooks, services |
+| Build auth UI pages            | [x]    | Sign in, Sign up            |
+| Setup session management       | [x]    | JWT strategy                |
+| Add protected route middleware | [x]    | Route protection            |
+| Write tutorial documentation   | [x]    | NextAuth setup guide        |
 
 ---
 

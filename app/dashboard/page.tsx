@@ -12,7 +12,7 @@ export default function DashboardPage() {
           {/* Welcome Section */}
           <div className="space-y-1">
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-            <p className="text-muted-foreground">Welcome to Pisky Design System</p>
+            <p className="text-muted-foreground">Welcome to Pisky Boilerplate</p>
           </div>
 
           {/* Stats Grid */}

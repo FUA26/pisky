@@ -15,5 +15,5 @@
     ]
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": ["shadcn", "browser-server"]
+  "enabledMcpjsonServers": ["shadcn", "context7", "memory"]
 }

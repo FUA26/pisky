@@ -20,10 +20,7 @@
     "paths": {
       "@/*": ["./*"],
       "@/features/*": ["./features/*"],
-      "@/components/*": ["./components/*"],
-      "@/hooks/*": ["./hooks/*"],
-      "@/types/*": ["./types/*"],
-      "@/utils/*": ["./utils/*"],
+      "@/shared/*": ["./shared/*"],
       "@/config/*": ["./config/*"]
     },
     "noUnusedLocals": false,
