@@ -73,7 +73,7 @@ export function handleError(error: unknown): NextResponse {
 /**
  * Helper error constructors
  */
-export const ApiError = {
+export const ApiErrorHelpers = {
   badRequest: (message: string, details?: unknown) =>
     new ApiErrorImpl("VALIDATION_ERROR" as ErrorCode, message, details, 400),
 

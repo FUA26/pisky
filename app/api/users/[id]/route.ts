@@ -23,6 +23,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const { id } = validateParams(await params, uuidSchema());
 
     const db = getDatabase();
+    if (!db) throw ApiError.internal("Database not available");
     const [user] = await db.select().from(users).where(eq(users.id, id)).limit(1);
 
     if (!user) {
@@ -44,6 +45,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const body = await validateBody(request, updateUserSchema);
 
     const db = getDatabase();
+    if (!db) throw ApiError.internal("Database not available");
 
     // Check if user exists
     const [existing] = await db.select().from(users).where(eq(users.id, id)).limit(1);
@@ -54,7 +56,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
     // Check if email is being changed and already exists
     if (body.email && body.email !== existing.email) {
-      const [emailCheck] = await db
+      const [emailCheck] = await db!
         .select()
         .from(users)
         .where(eq(users.email, body.email))
@@ -66,7 +68,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     // Update user
-    const [updatedUser] = await db
+    const [updatedUser] = await db!
       .update(users)
       .set({
         ...body,
@@ -92,6 +94,7 @@ export async function DELETE(
     const { id } = validateParams(await params, uuidSchema());
 
     const db = getDatabase();
+    if (!db) throw ApiError.internal("Database not available");
 
     // Check if user exists
     const [existing] = await db.select().from(users).where(eq(users.id, id)).limit(1);
@@ -101,7 +104,7 @@ export async function DELETE(
     }
 
     // Delete user
-    await db.delete(users).where(eq(users.id, id));
+    await db!.delete(users).where(eq(users.id, id));
 
     return success({ message: "User deleted successfully" });
   } catch (error) {

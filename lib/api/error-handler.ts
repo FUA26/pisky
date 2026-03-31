@@ -40,7 +40,7 @@ export class ValidationError extends AppError {
       ErrorCode.VALIDATION_ERROR,
       "Validation failed",
       HttpStatus.UNPROCESSABLE_ENTITY,
-      zodError.errors
+      zodError.issues
     );
     this.name = "ValidationError";
   }
@@ -110,7 +110,7 @@ function errorToApiError(error: unknown, config: ErrorHandlerConfig): ApiError {
     return {
       code: ErrorCode.VALIDATION_ERROR,
       message: "Validation failed",
-      details: error.errors,
+      details: error.issues,
     };
   }
 

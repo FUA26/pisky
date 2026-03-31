@@ -52,8 +52,10 @@ export function errorResponse(
   const apiError: ApiError = {
     code,
     message,
-    ...(details && { details }),
   };
+  if (details) {
+    (apiError as any).details = details;
+  }
 
   return NextResponse.json(
     {

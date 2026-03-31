@@ -36,6 +36,7 @@ export async function GET(request: NextRequest) {
     } = validateQuery(request.nextUrl.searchParams, userQuerySchema);
 
     const db = getDatabase();
+    if (!db) throw ApiError.internal("Database not available");
     const offset = (page - 1) * limit;
 
     // Build conditions
@@ -81,6 +82,7 @@ export async function POST(request: NextRequest) {
     const body = await validateBody(request, createUserSchema);
 
     const db = getDatabase();
+    if (!db) throw ApiError.internal("Database not available");
 
     // Check if user already exists
     const existing = await db.select().from(users).where(eq(users.email, body.email)).limit(1);
@@ -90,13 +92,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Create new user
-    const [newUser] = await db
+    const [newUser] = await db!
       .insert(users)
       .values({
         email: body.email,
         name: body.name,
         image: body.image,
-      })
+      } as any)
       .returning();
 
     return created(newUser);
