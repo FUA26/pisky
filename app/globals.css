@@ -76,15 +76,15 @@
   --input: var(--neutral-300);
   --ring: var(--primary-400);
 
-  /* Sidebar tokens */
-  --sidebar: var(--neutral-50);
-  --sidebar-foreground: var(--neutral-700);
-  --sidebar-primary: var(--primary-700);
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: var(--neutral-100);
-  --sidebar-accent-foreground: var(--neutral-900);
-  --sidebar-border: var(--neutral-200);
-  --sidebar-ring: var(--primary-400);
+  /* Sidebar tokens - Primary colored sidebar */
+  --sidebar: var(--primary-600);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: var(--primary-600);
+  --sidebar-accent: var(--primary-500);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: var(--primary-700);
+  --sidebar-ring: var(--primary-300);
 
   /* Tokenized radius + sizing */
   --radius-sm-token: 4px;
@@ -141,14 +141,14 @@
   --input: var(--neutral-700);
   --ring: var(--primary-300);
 
-  --sidebar: var(--neutral-800);
-  --sidebar-foreground: var(--neutral-100);
-  --sidebar-primary: var(--primary-500);
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: var(--neutral-700);
-  --sidebar-accent-foreground: var(--neutral-100);
-  --sidebar-border: var(--neutral-700);
-  --sidebar-ring: var(--primary-300);
+  --sidebar: var(--primary-700);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: var(--primary-700);
+  --sidebar-accent: var(--primary-600);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: var(--primary-800);
+  --sidebar-ring: var(--primary-400);
 }
 
 @layer base {
