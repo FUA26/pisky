@@ -1,4 +1,4 @@
-import { success, created, handleError, ApiError } from "@/shared/api";
+import { success, created, handleError, ApiErrorHelpers } from "@/shared/api";
 import { validateBody, validateQuery, commonSchemas } from "@/shared/api/validation";
 import { getDatabase } from "@/config/database";
 import { users } from "@/features/database/models/schema";
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     } = validateQuery(request.nextUrl.searchParams, userQuerySchema);
 
     const db = getDatabase();
-    if (!db) throw ApiError.internal("Database not available");
+    if (!db) throw ApiErrorHelpers.internal("Database not available");
     const offset = (page - 1) * limit;
 
     // Build conditions
@@ -82,13 +82,13 @@ export async function POST(request: NextRequest) {
     const body = await validateBody(request, createUserSchema);
 
     const db = getDatabase();
-    if (!db) throw ApiError.internal("Database not available");
+    if (!db) throw ApiErrorHelpers.internal("Database not available");
 
     // Check if user already exists
     const existing = await db.select().from(users).where(eq(users.email, body.email)).limit(1);
 
     if (existing.length > 0) {
-      throw ApiError.conflict("User with this email already exists");
+      throw ApiErrorHelpers.conflict("User with this email already exists");
     }
 
     // Create new user

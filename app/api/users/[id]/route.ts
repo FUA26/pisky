@@ -1,4 +1,4 @@
-import { success, handleError, ApiError } from "@/shared/api";
+import { success, handleError, ApiErrorHelpers } from "@/shared/api";
 import { validateParams, uuidSchema, validateBody } from "@/shared/api/validation";
 import { getDatabase } from "@/config/database";
 import { users } from "@/features/database/models/schema";
@@ -23,11 +23,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const { id } = validateParams(await params, uuidSchema());
 
     const db = getDatabase();
-    if (!db) throw ApiError.internal("Database not available");
+    if (!db) throw ApiErrorHelpers.internal("Database not available");
     const [user] = await db.select().from(users).where(eq(users.id, id)).limit(1);
 
     if (!user) {
-      throw ApiError.notFound("User not found");
+      throw ApiErrorHelpers.notFound("User not found");
     }
 
     return success(user);
@@ -45,13 +45,13 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const body = await validateBody(request, updateUserSchema);
 
     const db = getDatabase();
-    if (!db) throw ApiError.internal("Database not available");
+    if (!db) throw ApiErrorHelpers.internal("Database not available");
 
     // Check if user exists
     const [existing] = await db.select().from(users).where(eq(users.id, id)).limit(1);
 
     if (!existing) {
-      throw ApiError.notFound("User not found");
+      throw ApiErrorHelpers.notFound("User not found");
     }
 
     // Check if email is being changed and already exists
@@ -63,7 +63,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         .limit(1);
 
       if (emailCheck) {
-        throw ApiError.conflict("Email already in use");
+        throw ApiErrorHelpers.conflict("Email already in use");
       }
     }
 
@@ -94,13 +94,13 @@ export async function DELETE(
     const { id } = validateParams(await params, uuidSchema());
 
     const db = getDatabase();
-    if (!db) throw ApiError.internal("Database not available");
+    if (!db) throw ApiErrorHelpers.internal("Database not available");
 
     // Check if user exists
     const [existing] = await db.select().from(users).where(eq(users.id, id)).limit(1);
 
     if (!existing) {
-      throw ApiError.notFound("User not found");
+      throw ApiErrorHelpers.notFound("User not found");
     }
 
     // Delete user

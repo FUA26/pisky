@@ -1,6 +1,6 @@
 import { z, type ZodSchema, type ZodError } from "zod";
 import type { NextRequest } from "next/server";
-import { ApiError } from "./error-handler";
+import { ApiErrorHelpers } from "./error-handler";
 
 /**
  * Validate request body against a Zod schema
@@ -11,9 +11,9 @@ export async function validateBody<T>(request: NextRequest, schema: ZodSchema<T>
     return schema.parse(body);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw ApiError.badRequest("Validation failed", error.issues);
+      throw ApiErrorHelpers.badRequest("Validation failed", error.issues);
     }
-    throw ApiError.badRequest("Invalid request body");
+    throw ApiErrorHelpers.badRequest("Invalid request body");
   }
 }
 
@@ -46,9 +46,9 @@ export function validateQuery<T>(searchParams: URLSearchParams, schema: ZodSchem
     return schema.parse(processed);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw ApiError.badRequest("Invalid query parameters", error.issues);
+      throw ApiErrorHelpers.badRequest("Invalid query parameters", error.issues);
     }
-    throw ApiError.badRequest("Invalid query parameters");
+    throw ApiErrorHelpers.badRequest("Invalid query parameters");
   }
 }
 
@@ -60,9 +60,9 @@ export function validateParams<T>(params: Record<string, string>, schema: ZodSch
     return schema.parse(params);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw ApiError.badRequest("Invalid route parameters", error.issues);
+      throw ApiErrorHelpers.badRequest("Invalid route parameters", error.issues);
     }
-    throw ApiError.badRequest("Invalid route parameters");
+    throw ApiErrorHelpers.badRequest("Invalid route parameters");
   }
 }
 
