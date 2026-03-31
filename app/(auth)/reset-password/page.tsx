@@ -10,11 +10,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export const metadata = {
-  title: "Reset Password - Pisky",
-  description: "Reset your password",
-};
-
 export default function ResetPasswordPage() {
   const router = useRouter();
   const searchParams = useSearchParams();

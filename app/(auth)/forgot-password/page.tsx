@@ -11,11 +11,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export const metadata = {
-  title: "Forgot Password - Pisky",
-  description: "Reset your password",
-};
-
 export default function ForgotPasswordPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);

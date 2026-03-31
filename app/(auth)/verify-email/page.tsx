@@ -6,11 +6,6 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export const metadata = {
-  title: "Verify Email - Pisky",
-  description: "Verify your email address",
-};
-
 export default function VerifyEmailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
