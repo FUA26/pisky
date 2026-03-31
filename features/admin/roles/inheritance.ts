@@ -1,13 +1,23 @@
 import { db } from "@/config/database";
 import { roles, rolePermissions, permissions } from "@/features/database/models/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import type { Permission } from "@/features/auth/permissions/rbac-types";
 
 /**
  * Get all permissions for a role including inherited permissions
  * Recursively walks up the role hierarchy
  */
-export async function getAllPermissionsForRole(roleId: string): Promise<Permission[]> {
+export async function getAllPermissionsForRole(
+  roleId: string,
+  visited: Set<string> = new Set()
+): Promise<Permission[]> {
+  // Guard against cycles
+  if (visited.has(roleId)) {
+    console.warn(`Cycle detected in role hierarchy: ${roleId}`);
+    return [];
+  }
+  visited.add(roleId);
+
   // Get role details
   const roleResult = await db.select().from(roles).where(eq(roles.id, roleId)).limit(1);
 
@@ -30,7 +40,7 @@ export async function getAllPermissionsForRole(roleId: string): Promise<Permissi
 
   // If role has parent, recursively get parent's permissions
   if (role.parentRoleId) {
-    const parentPerms = await getAllPermissionsForRole(role.parentRoleId);
+    const parentPerms = await getAllPermissionsForRole(role.parentRoleId, visited);
     permissionList = [...permissionList, ...parentPerms];
   }
 
@@ -86,20 +96,20 @@ export async function detectCircularInheritance(
  * Get all descendants of a role (for hierarchy display)
  */
 export async function getRoleDescendants(roleId: string): Promise<string[]> {
-  const children = await db
-    .select({ id: roles.id })
-    .from(roles)
-    .where(eq(roles.parentRoleId, roleId));
+  const result = await db.execute(
+    sql`
+      WITH RECURSIVE descendants AS (
+        SELECT id FROM roles WHERE parent_role_id = ${roleId}
+        UNION ALL
+        SELECT r.id
+        FROM roles r
+        INNER JOIN descendants d ON r.parent_role_id = d.id
+      )
+      SELECT id FROM descendants
+    `
+  );
 
-  const descendants: string[] = [];
-
-  for (const child of children) {
-    descendants.push(child.id);
-    const childDescendants = await getRoleDescendants(child.id);
-    descendants.push(...childDescendants);
-  }
-
-  return descendants;
+  return result.rows.map((row: any) => row.id as string);
 }
 
 /**
