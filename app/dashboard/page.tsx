@@ -8,7 +8,7 @@ export default function DashboardPage() {
       <AppSidebar />
       <SidebarInset>
         <SiteHeader />
-        <div className="flex flex-1 flex-col gap-6 p-6 pt-0">
+        <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-6 pt-0">
           {/* Welcome Section */}
           <div className="space-y-1">
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
@@ -107,6 +107,30 @@ export default function DashboardPage() {
                   <span className="text-sm font-medium">Settings</span>
                 </button>
               </div>
+            </div>
+          </div>
+
+          {/* Extra content for scroll demo */}
+          <div className="bg-card rounded-xl border p-6">
+            <h2 className="text-lg font-semibold">Activity Feed</h2>
+            <p className="text-muted-foreground mt-1 text-sm">
+              Recent activity across your projects
+            </p>
+            <div className="mt-6 space-y-4">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="flex gap-4 border-b pb-4 last:border-0">
+                  <div className="bg-muted flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-medium">
+                    {i}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Activity item {i}</p>
+                    <p className="text-muted-foreground text-xs">
+                      This is a sample activity item to demonstrate scroll behavior
+                    </p>
+                  </div>
+                  <span className="text-muted-foreground text-xs">{i * 10}m ago</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
