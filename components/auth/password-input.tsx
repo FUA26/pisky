@@ -12,7 +12,7 @@ interface PasswordInputProps {
   placeholder?: string;
   disabled?: boolean;
   error?: string;
-  registration?: ReturnType<typeof import("react-hook-form").useRegister>;
+  registration?: any;
 }
 
 export function PasswordInput({
