@@ -7,6 +7,7 @@ import { useState } from "react";
 
 interface PasswordInputProps {
   id: string;
+  name?: string;
   label: string;
   placeholder?: string;
   disabled?: boolean;
@@ -16,6 +17,7 @@ interface PasswordInputProps {
 
 export function PasswordInput({
   id,
+  name,
   label,
   placeholder = "Enter password",
   disabled = false,
@@ -36,17 +38,21 @@ export function PasswordInput({
         />
         <Input
           id={id}
+          name={name}
           type={showPassword ? "text" : "password"}
           placeholder={placeholder}
           disabled={disabled}
+          aria-describedby={error ? `${id}-error` : undefined}
+          aria-invalid={!!error}
           className="bg-background border-muted/80 focus-visible:ring-primary h-11 rounded-xl pr-10 pl-10 shadow-none focus-visible:ring-1"
           {...registration}
         />
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="text-muted-foreground/60 hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2 transition-colors focus:outline-none"
-          tabIndex={-1}
+          aria-label={showPassword ? "Hide password" : "Show password"}
+          aria-pressed={showPassword}
+          className="text-muted-foreground/60 hover:text-foreground focus-visible:ring-ring absolute top-1/2 right-3 -translate-y-1/2 transition-colors focus-visible:ring-2 focus-visible:outline-none"
         >
           {showPassword ? (
             <EyeOff className="h-5 w-5" strokeWidth={1.5} />
@@ -55,7 +61,11 @@ export function PasswordInput({
           )}
         </button>
       </div>
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && (
+        <p id={`${id}-error`} className="text-destructive text-sm">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
