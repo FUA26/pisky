@@ -1,6 +1,5 @@
 import { drizzle as drizzlePGlite } from "drizzle-orm/pglite";
 import { PGlite } from "@electric-sql/pglite";
-import { migrate } from "drizzle-orm/postgres-js/pglite";
 import * as schema from "./models/schema";
 import { readFileSync } from "fs";
 import { join } from "path";

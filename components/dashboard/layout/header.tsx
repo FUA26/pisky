@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { GitHub } from "lucide-react";
+import { IconGithub } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Header() {
   return (
@@ -49,7 +49,7 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <GitHub className="h-5 w-5" />
+              <IconGithub className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
             </Link>
           </Button>
