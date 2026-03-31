@@ -5,6 +5,7 @@ import { forgotPasswordSchema } from "@/features/auth/validations/auth";
 import { users } from "@/features/database/models/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 /**
  * POST /api/auth/forgot-password
@@ -77,7 +78,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Password reset error:", error);
 
-    if (error instanceof Error && error.name === "ZodError") {
+    if (error instanceof ZodError) {
       return NextResponse.json(
         { error: "Validation Error", message: "Invalid email format" },
         { status: 400 }
