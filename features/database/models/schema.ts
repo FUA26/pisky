@@ -1,4 +1,14 @@
-import { pgTable, text, timestamp, boolean, uuid, varchar, primaryKey } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  timestamp,
+  boolean,
+  uuid,
+  varchar,
+  primaryKey,
+  jsonb,
+} from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -51,6 +61,7 @@ export const roles = pgTable("roles", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: varchar("name", { length: 50 }).notNull().unique(),
   description: text("description"),
+  parentRoleId: uuid("parentRoleId").references((): any => roles.id),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });
@@ -78,6 +89,48 @@ export const rolePermissions = pgTable(
   })
 );
 
+// Admin User Management Tables
+
+export const auditLogs = pgTable("audit_logs", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("userId")
+    .notNull()
+    .references(() => users.id),
+  action: varchar("action", { length: 50 }).notNull(),
+  entityType: varchar("entityType", { length: 50 }),
+  entityId: uuid("entityId"),
+  oldData: jsonb("oldData"),
+  newData: jsonb("newData"),
+  ipAddress: text("ipAddress"),
+  userAgent: text("userAgent"),
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+});
+
+export const userProfiles = pgTable("user_profiles", {
+  userId: uuid("userId")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  bio: text("bio"),
+  phone: varchar("phone", { length: 20 }),
+  address: text("address"),
+  preferences: jsonb("preferences")
+    .$type<{ theme?: string; language?: string }>()
+    .default(sql`'{}'`),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+});
+
+export const userSessions = pgTable("user_sessions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("userId")
+    .notNull()
+    .references(() => users.id),
+  token: varchar("token", { length: 255 }).notNull().unique(),
+  ipAddress: text("ipAddress"),
+  userAgent: text("userAgent"),
+  lastActive: timestamp("lastActive").defaultNow().notNull(),
+  expiresAt: timestamp("expiresAt").notNull(),
+});
+
 // Infer types from schema
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
@@ -91,3 +144,10 @@ export type Permission = typeof permissions.$inferSelect;
 export type NewPermission = typeof permissions.$inferInsert;
 export type RolePermission = typeof rolePermissions.$inferSelect;
 export type NewRolePermission = typeof rolePermissions.$inferInsert;
+export type AuditLog = typeof auditLogs.$inferSelect;
+export type NewAuditLog = typeof auditLogs.$inferInsert;
+export type UserProfile = typeof userProfiles.$inferSelect;
+export type NewUserProfile = typeof userProfiles.$inferInsert;
+export type UserSession = typeof userSessions.$inferSelect;
+export type NewUserSession = typeof userSessions.$inferInsert;
+export type RoleWithParent = typeof roles.$inferSelect & { parentRole?: Role };

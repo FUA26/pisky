@@ -1,6 +1,7 @@
 import { getDatabase } from "@/config/database";
 import { users } from "@/features/database/models/schema";
 import { seedAuthData } from "./auth-seed";
+import { seedPermissions } from "./permissions-seed";
 
 export async function seed() {
   const db = getDatabase();
@@ -24,6 +25,9 @@ export async function seed() {
 
   // Seed auth data (roles, permissions, admin user)
   await seedAuthData();
+
+  // Seed permissions
+  await seedPermissions();
 }
 
 seed().catch(console.error);
