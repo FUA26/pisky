@@ -1,4 +1,4 @@
-import { db } from "@/config/database";
+import { getDatabase } from "@/config/database";
 import { roles, rolePermissions, permissions } from "@/features/database/models/schema";
 import { eq, sql } from "drizzle-orm";
 import type { Permission } from "@/features/auth/permissions/rbac-types";
@@ -11,6 +11,8 @@ export async function getAllPermissionsForRole(
   roleId: string,
   visited: Set<string> = new Set()
 ): Promise<Permission[]> {
+  const db = getDatabase()!;
+
   // Guard against cycles
   if (visited.has(roleId)) {
     console.warn(`Cycle detected in role hierarchy: ${roleId}`);
@@ -57,6 +59,8 @@ export async function detectCircularInheritance(
   roleId: string,
   parentRoleId: string
 ): Promise<boolean> {
+  const db = getDatabase()!;
+
   // Can't be your own parent
   if (roleId === parentRoleId) {
     return true;
@@ -96,6 +100,8 @@ export async function detectCircularInheritance(
  * Get all descendants of a role (for hierarchy display)
  */
 export async function getRoleDescendants(roleId: string): Promise<string[]> {
+  const db = getDatabase()!;
+
   const result = await db.execute(
     sql`
       WITH RECURSIVE descendants AS (
@@ -109,13 +115,15 @@ export async function getRoleDescendants(roleId: string): Promise<string[]> {
     `
   );
 
-  return result.rows.map((row: any) => row.id as string);
+  return (result as any).rows.map((row: any) => row.id as string);
 }
 
 /**
  * Get role hierarchy tree for display
  */
 export async function getRoleHierarchy(): Promise<RoleHierarchyNode[]> {
+  const db = getDatabase()!;
+
   const allRoles = await db.select().from(roles);
 
   // Build role map
@@ -127,11 +135,11 @@ export async function getRoleHierarchy(): Promise<RoleHierarchyNode[]> {
   // Build tree
   const rootRoles: RoleHierarchyNode[] = [];
   for (const role of allRoles) {
-    const node = roleMap.get(role.id)!;
+    const node = roleMap.get(role.id)! as any;
     if (role.parentRoleId) {
       const parent = roleMap.get(role.parentRoleId);
       if (parent) {
-        parent.children.push(node);
+        (parent as any).children.push(node);
       }
     } else {
       rootRoles.push(node);

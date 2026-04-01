@@ -1,4 +1,4 @@
-import { db } from "@/config/database";
+import { getDatabase } from "@/config/database";
 import { auditLogs } from "@/features/database/models/schema";
 import type { NewAuditLog, AuditLog } from "@/features/database/models/schema";
 import type { NextRequest } from "next/server";
@@ -24,6 +24,8 @@ export interface AuditLogParams {
  * @returns The created audit log entry
  */
 export async function logAction(params: AuditLogParams): Promise<AuditLog> {
+  const db = getDatabase()!;
+
   const [log] = await db
     .insert(auditLogs)
     .values({

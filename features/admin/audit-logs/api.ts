@@ -1,4 +1,4 @@
-import { db } from "@/config/database";
+import { getDatabase } from "@/config/database";
 import { auditLogs, users } from "@/features/database/models/schema";
 import { eq, and, desc, like, sql, gte, lte, or } from "drizzle-orm";
 import type { AuditLog } from "@/features/database/models/schema";
@@ -58,6 +58,8 @@ export interface AuditLogResult {
  * @returns Paginated audit logs with user information
  */
 export async function getAuditLogs(filters: AuditLogFilters = {}): Promise<AuditLogResult> {
+  const db = getDatabase();
+
   const {
     action,
     entityType,
@@ -106,7 +108,7 @@ export async function getAuditLogs(filters: AuditLogFilters = {}): Promise<Audit
   const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
 
   // Get total count
-  const [{ count }] = await db
+  const [{ count }] = await db!
     .select({ count: sql<number>`count(*)::int` })
     .from(auditLogs)
     .where(whereClause);
@@ -116,7 +118,7 @@ export async function getAuditLogs(filters: AuditLogFilters = {}): Promise<Audit
   const offset = (page - 1) * pageSize;
 
   // Get paginated logs with user info
-  const logs = await db
+  const logs = await db!
     .select({
       id: auditLogs.id,
       userId: auditLogs.userId,
@@ -172,6 +174,8 @@ export async function getEntityAuditLogs(
     }
   >
 > {
+  const db = getDatabase()!;
+
   const logs = await db
     .select({
       id: auditLogs.id,

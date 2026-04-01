@@ -8,6 +8,7 @@ import {
   primaryKey,
   jsonb,
 } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -60,7 +61,7 @@ export const roles = pgTable("roles", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: varchar("name", { length: 50 }).notNull().unique(),
   description: text("description"),
-  parentRoleId: uuid("parentRoleId").references(() => roles.id),
+  parentRoleId: uuid("parentRoleId").references((): any => roles.id),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });
@@ -112,7 +113,9 @@ export const userProfiles = pgTable("user_profiles", {
   bio: text("bio"),
   phone: varchar("phone", { length: 20 }),
   address: text("address"),
-  preferences: jsonb("preferences").$type<{ theme?: string; language?: string }>().default("{}"),
+  preferences: jsonb("preferences")
+    .$type<{ theme?: string; language?: string }>()
+    .default(sql`'{}'`),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });
 

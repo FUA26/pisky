@@ -3,7 +3,7 @@ import { hasPermission } from "./rbac-checker";
 import { eq } from "drizzle-orm";
 import { getDatabase } from "@/config/database";
 import { roles, users } from "@/features/database/models/schema";
-import type { Permission, UserPermissionsContext } from "./rbac-types";
+import type { Permission, UserPermissionsContext, PermissionCheckResult } from "./rbac-types";
 import { UnauthorizedError, ForbiddenError } from "@/lib/api/error-handler";
 import { getAllPermissionsForRole } from "@/features/admin/roles/inheritance";
 
@@ -90,7 +90,11 @@ export async function requireAuth() {
  */
 export async function requirePermission(userId: string, permission: Permission): Promise<void> {
   const userPermissions = await loadUserPermissions(userId);
-  const result = hasPermission(userPermissions, [permission]);
+  const result = hasPermission(
+    userPermissions,
+    [permission],
+    {}
+  ) as unknown as PermissionCheckResult;
 
   if (!result.allowed) {
     throw new ForbiddenError(`Missing required permission: ${permission}`);
@@ -106,7 +110,9 @@ export async function requireAnyPermission(
   permissions: Permission[]
 ): Promise<void> {
   const userPermissions = await loadUserPermissions(userId);
-  const result = hasPermission(userPermissions, permissions, { strict: false });
+  const result = hasPermission(userPermissions, permissions, {
+    strict: false,
+  }) as unknown as PermissionCheckResult;
 
   if (!result.allowed) {
     throw new ForbiddenError(`Missing one of required permissions: ${permissions.join(", ")}`);
@@ -122,7 +128,9 @@ export async function requireAllPermissions(
   permissions: Permission[]
 ): Promise<void> {
   const userPermissions = await loadUserPermissions(userId);
-  const result = hasPermission(userPermissions, permissions, { strict: true });
+  const result = hasPermission(userPermissions, permissions, {
+    strict: true,
+  }) as unknown as PermissionCheckResult;
 
   if (!result.allowed) {
     throw new ForbiddenError(`Missing required permissions: ${permissions.join(", ")}`);

@@ -15,14 +15,14 @@ import type { NextRequest } from "next/server";
  *
  * Permissions: ADMIN_USERS_MANAGE
  */
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Authenticate and check permissions
     const session = await requireAuth();
     await requirePermission(session.user.id, "ADMIN_USERS_MANAGE");
 
     // Validate user ID
-    const { id } = validateParams(params, userIdParamsSchema);
+    const { id } = validateParams(await params, userIdParamsSchema);
 
     // Get user
     const user = await getUserById(id);
@@ -48,14 +48,14 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
  * Permissions: ADMIN_USERS_MANAGE
  * Prevents self-modification
  */
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Authenticate and check permissions
     const session = await requireAuth();
     await requirePermission(session.user.id, "ADMIN_USERS_MANAGE");
 
     // Validate user ID
-    const { id } = validateParams(params, userIdParamsSchema);
+    const { id } = validateParams(await params, userIdParamsSchema);
 
     // Prevent self-modification
     if (id === session.user.id) {
@@ -124,14 +124,17 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
  * Permissions: ADMIN_USERS_MANAGE
  * Prevents self-deletion
  */
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     // Authenticate and check permissions
     const session = await requireAuth();
     await requirePermission(session.user.id, "ADMIN_USERS_MANAGE");
 
     // Validate user ID
-    const { id } = validateParams(params, userIdParamsSchema);
+    const { id } = validateParams(await params, userIdParamsSchema);
 
     // Prevent self-deletion
     if (id === session.user.id) {
