@@ -1,4 +1,5 @@
-import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach, vi } from "vitest";
+import type { NextRequest } from "next/server";
 import { getDatabase } from "@/config/database";
 import {
   users,
@@ -24,7 +25,7 @@ import { hash } from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 
 // Helper to create a mock request
-function createMockRequest(method: string, url: string, body?: any, userId?: string): Request {
+function createMockRequest(method: string, url: string, body?: any, userId?: string): NextRequest {
   const headers = new Headers();
   headers.set("content-type", "application/json");
   if (userId) {
@@ -35,7 +36,7 @@ function createMockRequest(method: string, url: string, body?: any, userId?: str
     method,
     headers,
     body: body ? JSON.stringify(body) : undefined,
-  }) as any;
+  }) as unknown as NextRequest;
 }
 
 // Helper to create mock session
@@ -150,12 +151,13 @@ describe("Admin Users API", () => {
       );
 
       // Mock auth
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await getUsers(request);
       const data = await response.json();
@@ -174,12 +176,13 @@ describe("Admin Users API", () => {
         "http://localhost:3000/api/admin/users?search=admin"
       );
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await getUsers(request);
       const data = await response.json();
@@ -194,12 +197,13 @@ describe("Admin Users API", () => {
         `http://localhost:3000/api/admin/users?roleId=${userRole.id}`
       );
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await getUsers(request);
       const data = await response.json();
@@ -224,12 +228,13 @@ describe("Admin Users API", () => {
         newUserData
       );
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await createUser(request);
       const data = await response.json();
@@ -264,12 +269,13 @@ describe("Admin Users API", () => {
         duplicateData
       );
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await createUser(request);
       const data = await response.json();
@@ -286,12 +292,13 @@ describe("Admin Users API", () => {
         `http://localhost:3000/api/admin/users/${regularUser.id}`
       );
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await getUser(request, { params: { id: regularUser.id } });
       const data = await response.json();
@@ -305,12 +312,13 @@ describe("Admin Users API", () => {
       const fakeId = uuidv4();
       const request = createMockRequest("GET", `http://localhost:3000/api/admin/users/${fakeId}`);
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await getUser(request, { params: { id: fakeId } });
 
@@ -330,12 +338,13 @@ describe("Admin Users API", () => {
         updateData
       );
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await updateUser(request, { params: { id: regularUser.id } });
       const data = await response.json();
@@ -363,12 +372,13 @@ describe("Admin Users API", () => {
         { name: "Hacked" }
       );
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await updateUser(request, { params: { id: adminUser.id } });
       const data = await response.json();
@@ -388,14 +398,15 @@ describe("Admin Users API", () => {
         updateData
       );
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
-      const cacheClearSpy = jest.spyOn(
+      const cacheClearSpy = vi.spyOn(
         require("@/features/auth/permissions/permissions"),
         "clearPermissionCache"
       );
@@ -430,12 +441,13 @@ describe("Admin Users API", () => {
         `http://localhost:3000/api/admin/users/${testUser.id}`
       );
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await deleteUser(request, { params: { id: testUser.id } });
 
@@ -460,12 +472,13 @@ describe("Admin Users API", () => {
         `http://localhost:3000/api/admin/users/${adminUser.id}`
       );
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await deleteUser(request, { params: { id: adminUser.id } });
       const data = await response.json();
@@ -513,12 +526,13 @@ describe("Admin Users API", () => {
         userIds: [testUsers[0].id, testUsers[1].id],
       });
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await bulkOperation(request);
       const data = await response.json();
@@ -540,14 +554,15 @@ describe("Admin Users API", () => {
         roleId: adminRole.id,
       });
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
-      const cacheClearSpy = jest.spyOn(
+      const cacheClearSpy = vi.spyOn(
         require("@/features/auth/permissions/permissions"),
         "clearPermissionCache"
       );
@@ -578,12 +593,13 @@ describe("Admin Users API", () => {
         userIds: [testUsers[0].id, adminUser.id],
       });
 
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requireAuth")
-        .mockResolvedValue(createMockSession(adminUser.id));
-      jest
-        .spyOn(require("@/features/auth/permissions/permissions"), "requirePermission")
-        .mockResolvedValue(undefined);
+      vi.spyOn(require("@/features/auth/permissions/permissions"), "requireAuth").mockResolvedValue(
+        createMockSession(adminUser.id)
+      );
+      vi.spyOn(
+        require("@/features/auth/permissions/permissions"),
+        "requirePermission"
+      ).mockResolvedValue(undefined);
 
       const response = await bulkOperation(request);
       const data = await response.json();

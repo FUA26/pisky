@@ -1,4 +1,5 @@
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
+import { describe, it, expect, beforeAll, afterAll, beforeEach, vi } from "vitest";
+import type { NextRequest } from "next/server";
 import { getDatabase } from "@/config/database";
 import {
   roles,
@@ -22,7 +23,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 // Helper to create a mock request
-function createMockRequest(method: string, url: string, body?: any, userId?: string): Request {
+function createMockRequest(method: string, url: string, body?: any, userId?: string): NextRequest {
   const headers = new Headers();
   headers.set("content-type", "application/json");
   if (userId) {
@@ -33,7 +34,7 @@ function createMockRequest(method: string, url: string, body?: any, userId?: str
     method,
     headers,
     body: body ? JSON.stringify(body) : undefined,
-  }) as any;
+  }) as unknown as NextRequest;
 }
 
 // Helper to create mock session
