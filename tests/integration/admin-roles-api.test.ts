@@ -1,6 +1,12 @@
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
-import { db } from "@/config/database";
-import { roles, rolePermissions, permissions, users } from "@/features/database/models/schema";
+import { getDatabase } from "@/config/database";
+import {
+  roles,
+  rolePermissions,
+  permissions,
+  users,
+  auditLogs,
+} from "@/features/database/models/schema";
 import { eq, inArray } from "drizzle-orm";
 import { POST as createRole, GET as getRoles } from "@/app/api/admin/roles/route";
 import {
@@ -45,6 +51,7 @@ describe("Admin Roles API", () => {
   let testPermission: any;
 
   beforeAll(async () => {
+    const db = getDatabase()!;
     // Create test permissions
     const [rolesReadPerm] = await db
       .insert(permissions)
@@ -110,6 +117,7 @@ describe("Admin Roles API", () => {
   });
 
   afterAll(async () => {
+    const db = getDatabase()!;
     // Cleanup
     await clearAllPermissionCache();
     await db.delete(rolePermissions);
@@ -297,6 +305,8 @@ describe("Admin Roles API", () => {
     });
 
     it("should update role parent", async () => {
+      const db = getDatabase()!;
+
       const [newRole] = await db
         .insert(roles)
         .values({
@@ -324,6 +334,8 @@ describe("Admin Roles API", () => {
     });
 
     it("should update role permissions", async () => {
+      const db = getDatabase()!;
+
       const [newRole] = await db
         .insert(roles)
         .values({
@@ -351,6 +363,8 @@ describe("Admin Roles API", () => {
     });
 
     it("should reject circular inheritance", async () => {
+      const db = getDatabase()!;
+
       // Create parent -> child relationship
       const [parentRole] = await db
         .insert(roles)
@@ -388,6 +402,7 @@ describe("Admin Roles API", () => {
 
   describe("DELETE /api/admin/roles/[id]", () => {
     it("should delete role", async () => {
+      const db = getDatabase()!;
       const [newRole] = await db
         .insert(roles)
         .values({
@@ -410,7 +425,7 @@ describe("Admin Roles API", () => {
       expect(data.id).toBe(newRole.id);
 
       // Verify deletion
-      const deleted = await db.query.roles.findFirst({
+      const deleted = await (db as any).query.roles.findFirst({
         where: eq(roles.id, newRole.id),
       });
       expect(deleted).toBeUndefined();

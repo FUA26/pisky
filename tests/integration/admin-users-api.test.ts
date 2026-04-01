@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
-import { db } from "@/config/database";
+import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from "vitest";
+import { getDatabase } from "@/config/database";
 import {
   users,
   roles,
@@ -54,6 +54,8 @@ describe("Admin Users API", () => {
   let testPermission: any;
 
   beforeAll(async () => {
+    const db = getDatabase()!;
+
     // Create test permissions
     const [adminPerm] = await db
       .insert(permissions)
@@ -121,6 +123,8 @@ describe("Admin Users API", () => {
   });
 
   afterAll(async () => {
+    const db = getDatabase()!;
+
     // Cleanup test data
     await db.delete(auditLogs);
     await db.delete(rolePermissions);
@@ -130,6 +134,8 @@ describe("Admin Users API", () => {
   });
 
   beforeEach(async () => {
+    const db = getDatabase()!;
+
     // Clear audit logs before each test
     await db.delete(auditLogs);
     clearPermissionCache(adminUser.id);
@@ -234,6 +240,7 @@ describe("Admin Users API", () => {
       expect(data.data.name).toBe(newUserData.name);
 
       // Verify audit log was created
+      const db = getDatabase()!;
       const [auditLog] = await db
         .select()
         .from(auditLogs)
@@ -338,6 +345,7 @@ describe("Admin Users API", () => {
       expect(data.data.name).toBe(updateData.name);
 
       // Verify audit log
+      const db = getDatabase()!;
       const [auditLog] = await db
         .select()
         .from(auditLogs)
@@ -397,12 +405,15 @@ describe("Admin Users API", () => {
       expect(cacheClearSpy).toHaveBeenCalledWith(regularUser.id);
 
       // Reset
+      const db = getDatabase()!;
       await db.update(users).set({ roleId: userRole.id }).where(eq(users.id, regularUser.id));
     });
   });
 
   describe("DELETE /api/admin/users/:id", () => {
     it("should delete a user", async () => {
+      const db = getDatabase()!;
+
       // Create a test user to delete
       const passwordHash = await hash("test123", 10);
       const [testUser] = await db
@@ -468,6 +479,8 @@ describe("Admin Users API", () => {
     let testUsers: any[] = [];
 
     beforeEach(async () => {
+      const db = getDatabase()!;
+
       // Create test users for bulk operations
       const passwordHash = await hash("test123", 10);
       const [user1, user2, user3] = await db
@@ -482,6 +495,8 @@ describe("Admin Users API", () => {
     });
 
     afterEach(async () => {
+      const db = getDatabase()!;
+
       // Cleanup test users
       await db.delete(users).where(
         inArray(
@@ -513,6 +528,7 @@ describe("Admin Users API", () => {
       expect(data.data.count).toBe(2);
 
       // Verify users are deleted
+      const db = getDatabase()!;
       const remaining = await db.select().from(users).where(eq(users.id, testUsers[0].id));
       expect(remaining.length).toBe(0);
     });
@@ -545,6 +561,7 @@ describe("Admin Users API", () => {
       expect(cacheClearSpy).toHaveBeenCalledTimes(2);
 
       // Verify roles were updated
+      const db = getDatabase()!;
       const [user1] = await db.select().from(users).where(eq(users.id, testUsers[0].id));
       expect(user1.roleId).toBe(adminRole.id);
 

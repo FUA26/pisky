@@ -5,13 +5,16 @@ import {
   getRoleDescendants,
   getRoleHierarchy,
 } from "@/features/admin/roles/inheritance";
+import { getDatabase } from "@/config/database";
 
 // Mock the database
+const mockDb = {
+  select: vi.fn(),
+  execute: vi.fn(),
+};
+
 vi.mock("@/config/database", () => ({
-  db: {
-    select: vi.fn(),
-    execute: vi.fn(),
-  },
+  getDatabase: vi.fn(() => mockDb),
 }));
 
 describe("Role Inheritance", () => {
@@ -20,7 +23,7 @@ describe("Role Inheritance", () => {
   });
 
   it("should get direct permissions for role without parent", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     // Mock role query
     vi.mocked(db.select).mockReturnValueOnce({
@@ -50,7 +53,7 @@ describe("Role Inheritance", () => {
   });
 
   it("should inherit permissions from parent role", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     let callCount = 0;
     vi.mocked(db.select).mockImplementation(() => {
@@ -112,7 +115,7 @@ describe("Role Inheritance", () => {
   });
 
   it("should handle multi-level inheritance", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     let callCount = 0;
     vi.mocked(db.select).mockImplementation(() => {
@@ -202,7 +205,7 @@ describe("Role Inheritance", () => {
   });
 
   it("should detect circular inheritance (chain)", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     let callCount = 0;
     vi.mocked(db.select).mockImplementation(() => {
@@ -235,7 +238,7 @@ describe("Role Inheritance", () => {
   });
 
   it("should allow valid inheritance chain", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     vi.mocked(db.select).mockReturnValue({
       from: vi.fn().mockReturnValue({
@@ -254,7 +257,7 @@ describe("Role Inheritance", () => {
 
 describe("getAllPermissionsForRole", () => {
   it("should handle cycles in role hierarchy", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     let callCount = 0;
     vi.mocked(db.select).mockImplementation(() => {
@@ -327,7 +330,7 @@ describe("getAllPermissionsForRole", () => {
 
 describe("getRoleDescendants", () => {
   it("should return empty array for leaf nodes", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     (db.execute as any).mockResolvedValue({
       rows: [],
@@ -338,7 +341,7 @@ describe("getRoleDescendants", () => {
   });
 
   it("should return all descendants in hierarchy", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     (db.execute as any).mockResolvedValue({
       rows: [{ id: "child-1" }, { id: "child-2" }, { id: "grandchild-1" }, { id: "grandchild-2" }],
@@ -349,7 +352,7 @@ describe("getRoleDescendants", () => {
   });
 
   it("should handle empty result set", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     (db.execute as any).mockResolvedValue({
       rows: [],
@@ -362,7 +365,7 @@ describe("getRoleDescendants", () => {
 
 describe("getRoleHierarchy", () => {
   it("should build tree structure correctly", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     const mockRoles = [
       { id: "root", name: "Root", description: null, parentRoleId: null },
@@ -370,7 +373,7 @@ describe("getRoleHierarchy", () => {
       { id: "grandchild", name: "Grandchild", description: null, parentRoleId: "child" },
     ];
 
-    vi.mocked(db.select).mockReturnValueOnce({
+    vi.mocked(db.select).mockReturnValue({
       from: vi.fn().mockResolvedValue(mockRoles),
     } as any);
 
@@ -384,7 +387,7 @@ describe("getRoleHierarchy", () => {
   });
 
   it("should handle multiple root roles", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
     const mockRoles = [
       { id: "root-1", name: "Root 1", description: null, parentRoleId: null },
@@ -392,7 +395,7 @@ describe("getRoleHierarchy", () => {
       { id: "child-1", name: "Child 1", description: null, parentRoleId: "root-1" },
     ];
 
-    vi.mocked(db.select).mockReturnValueOnce({
+    vi.mocked(db.select).mockReturnValue({
       from: vi.fn().mockResolvedValue(mockRoles),
     } as any);
 
@@ -405,9 +408,9 @@ describe("getRoleHierarchy", () => {
   });
 
   it("should handle empty hierarchy", async () => {
-    const { db } = await import("@/config/database");
+    const db = getDatabase()!;
 
-    vi.mocked(db.select).mockReturnValueOnce({
+    vi.mocked(db.select).mockReturnValue({
       from: vi.fn().mockResolvedValue([]),
     } as any);
 

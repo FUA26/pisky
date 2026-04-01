@@ -11,13 +11,17 @@ import {
   getUserAuditLogs,
 } from "@/features/admin/audit-logs/api";
 import type { NextRequest } from "next/server";
+import { getDatabase } from "@/config/database";
 
 // Mock the database
+const mockDb = {
+  insert: vi.fn(),
+  select: vi.fn(),
+  execute: vi.fn(),
+};
+
 vi.mock("@/config/database", () => ({
-  db: {
-    insert: vi.fn(),
-    select: vi.fn(),
-  },
+  getDatabase: vi.fn(() => mockDb),
 }));
 
 describe("Audit Logging Service", () => {
@@ -27,7 +31,7 @@ describe("Audit Logging Service", () => {
 
   describe("logAction", () => {
     it("should log user creation action", async () => {
-      const { db } = await import("@/config/database");
+      const db = getDatabase()!;
 
       const mockValues = vi.fn().mockReturnValue({
         returning: vi.fn().mockResolvedValue([
@@ -68,7 +72,7 @@ describe("Audit Logging Service", () => {
     });
 
     it("should log user update with old/new data", async () => {
-      const { db } = await import("@/config/database");
+      const db = getDatabase()!;
 
       const mockValues = vi.fn().mockReturnValue({
         returning: vi.fn().mockResolvedValue([
@@ -109,7 +113,7 @@ describe("Audit Logging Service", () => {
     });
 
     it("should handle missing optional fields", async () => {
-      const { db } = await import("@/config/database");
+      const db = getDatabase()!;
 
       const mockValues = vi.fn().mockReturnValue({
         returning: vi.fn().mockResolvedValue([
@@ -146,7 +150,7 @@ describe("Audit Logging Service", () => {
 
   describe("getAuditLogs", () => {
     it("should retrieve audit logs with filters", async () => {
-      const { db } = await import("@/config/database");
+      const db = getDatabase()!;
 
       const mockLogs = [
         {
@@ -209,7 +213,7 @@ describe("Audit Logging Service", () => {
     });
 
     it("should support pagination", async () => {
-      const { db } = await import("@/config/database");
+      const db = getDatabase()!;
 
       const mockLogs = [
         {
@@ -270,7 +274,7 @@ describe("Audit Logging Service", () => {
 
   describe("getEntityAuditLogs", () => {
     it("should retrieve audit logs for specific entity", async () => {
-      const { db } = await import("@/config/database");
+      const db = getDatabase()!;
 
       const mockLogs = [
         {
@@ -329,7 +333,7 @@ describe("Audit Logging Service", () => {
     });
 
     it("should return empty array for entity with no logs", async () => {
-      const { db } = await import("@/config/database");
+      const db = getDatabase()!;
 
       const mockQueryBuilder = {
         from: vi.fn().mockReturnThis(),
@@ -416,7 +420,7 @@ describe("Audit Logging Service", () => {
 
   describe("logActionFromRequest", () => {
     it("should extract IP and user agent from request", async () => {
-      const { db } = await import("@/config/database");
+      const db = getDatabase()!;
 
       const mockRequest = {
         headers: {
@@ -468,7 +472,7 @@ describe("Audit Logging Service", () => {
 
   describe("getUserAuditLogs", () => {
     it("should return logs for specific user", async () => {
-      const { db } = await import("@/config/database");
+      const db = getDatabase()!;
 
       const mockLogs = [
         {
@@ -541,7 +545,7 @@ describe("Audit Logging Service", () => {
     });
 
     it("should return empty array when no logs found", async () => {
-      const { db } = await import("@/config/database");
+      const db = getDatabase()!;
 
       let selectCallCount = 0;
       vi.mocked(db.select).mockImplementation(() => {
