@@ -262,7 +262,7 @@ describe("Admin Roles API", () => {
         adminUser.id
       );
 
-      const response = await getRole(request, { params: { id: adminRole.id } });
+      const response = await getRole(request, { params: Promise.resolve({ id: adminRole.id }) });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -280,7 +280,7 @@ describe("Admin Roles API", () => {
         adminUser.id
       );
 
-      const response = await getRole(request, { params: { id: fakeId } });
+      const response = await getRole(request, { params: Promise.resolve({ id: fakeId }) });
       expect(response.status).toBe(404);
     });
   });
@@ -298,7 +298,7 @@ describe("Admin Roles API", () => {
         adminUser.id
       );
 
-      const response = await updateRole(request, { params: { id: adminRole.id } });
+      const response = await updateRole(request, { params: Promise.resolve({ id: adminRole.id }) });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -327,7 +327,7 @@ describe("Admin Roles API", () => {
         adminUser.id
       );
 
-      const response = await updateRole(request, { params: { id: newRole.id } });
+      const response = await updateRole(request, { params: Promise.resolve({ id: newRole.id }) });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -356,7 +356,7 @@ describe("Admin Roles API", () => {
         adminUser.id
       );
 
-      const response = await updateRole(request, { params: { id: newRole.id } });
+      const response = await updateRole(request, { params: Promise.resolve({ id: newRole.id }) });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -396,7 +396,9 @@ describe("Admin Roles API", () => {
         adminUser.id
       );
 
-      const response = await updateRole(request, { params: { id: parentRole.id } });
+      const response = await updateRole(request, {
+        params: Promise.resolve({ id: parentRole.id }),
+      });
       expect(response.status).toBe(400);
     });
   });
@@ -419,7 +421,7 @@ describe("Admin Roles API", () => {
         adminUser.id
       );
 
-      const response = await deleteRole(request, { params: { id: newRole.id } });
+      const response = await deleteRole(request, { params: Promise.resolve({ id: newRole.id }) });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -441,7 +443,7 @@ describe("Admin Roles API", () => {
         adminUser.id
       );
 
-      const response = await deleteRole(request, { params: { id: adminRole.id } });
+      const response = await deleteRole(request, { params: Promise.resolve({ id: adminRole.id }) });
       expect(response.status).toBe(400);
     });
   });

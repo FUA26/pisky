@@ -300,7 +300,7 @@ describe("Admin Users API", () => {
         "requirePermission"
       ).mockResolvedValue(undefined);
 
-      const response = await getUser(request, { params: { id: regularUser.id } });
+      const response = await getUser(request, { params: Promise.resolve({ id: regularUser.id }) });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -320,7 +320,7 @@ describe("Admin Users API", () => {
         "requirePermission"
       ).mockResolvedValue(undefined);
 
-      const response = await getUser(request, { params: { id: fakeId } });
+      const response = await getUser(request, { params: Promise.resolve({ id: fakeId }) });
 
       expect(response.status).toBe(404);
     });
@@ -346,7 +346,9 @@ describe("Admin Users API", () => {
         "requirePermission"
       ).mockResolvedValue(undefined);
 
-      const response = await updateUser(request, { params: { id: regularUser.id } });
+      const response = await updateUser(request, {
+        params: Promise.resolve({ id: regularUser.id }),
+      });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -380,7 +382,7 @@ describe("Admin Users API", () => {
         "requirePermission"
       ).mockResolvedValue(undefined);
 
-      const response = await updateUser(request, { params: { id: adminUser.id } });
+      const response = await updateUser(request, { params: Promise.resolve({ id: adminUser.id }) });
       const data = await response.json();
 
       expect(response.status).toBe(403);
@@ -411,7 +413,7 @@ describe("Admin Users API", () => {
         "clearPermissionCache"
       );
 
-      await updateUser(request, { params: { id: regularUser.id } });
+      await updateUser(request, { params: Promise.resolve({ id: regularUser.id }) });
 
       expect(cacheClearSpy).toHaveBeenCalledWith(regularUser.id);
 
@@ -449,7 +451,7 @@ describe("Admin Users API", () => {
         "requirePermission"
       ).mockResolvedValue(undefined);
 
-      const response = await deleteUser(request, { params: { id: testUser.id } });
+      const response = await deleteUser(request, { params: Promise.resolve({ id: testUser.id }) });
 
       expect(response.status).toBe(204);
 
@@ -480,7 +482,7 @@ describe("Admin Users API", () => {
         "requirePermission"
       ).mockResolvedValue(undefined);
 
-      const response = await deleteUser(request, { params: { id: adminUser.id } });
+      const response = await deleteUser(request, { params: Promise.resolve({ id: adminUser.id }) });
       const data = await response.json();
 
       expect(response.status).toBe(403);
